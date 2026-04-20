@@ -33,15 +33,17 @@
 .hero-badge { margin-bottom: 1.5rem; }
 .hero-subtitle { margin: 1.5rem 0 2.5rem; font-size: 1.25rem; max-width: 600px; }
 .hero-btns { display: flex; gap: 1rem; margin-bottom: 3rem; }
+.hero-btns .btn { flex: 1; }
 .hero-tech-stack { display: flex; flex-wrap: wrap; gap: 1.5rem; margin-top: 2rem; }
 .tech-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.875rem; color: var(--text-tertiary); font-weight: 500; }
 .tech-item i { font-size: 1.25rem; color: var(--accent-primary); }
-.hero-visual { flex: 1; display: flex; justify-content: center; align-items: center; position: relative; }
+.hero-visual { flex: 1; display: flex; justify-content: center; align-items: center; position: relative; width: 100%; }
 .hero-blob { position: absolute; width: 400px; height: 400px; background: var(--accent-gradient); filter: blur(80px); opacity: 0.15; border-radius: 50%; z-index: -1; animation: blobFloat 10s infinite alternate ease-in-out; }
-.hero-image-container { width: 350px; height: 450px; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 30px; display: flex; justify-content: center; align-items: center; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3); overflow: hidden; }
+.hero-image-container { width: 100%; max-width: 350px; aspect-ratio: 3/4; background: var(--bg-secondary); border: 1px solid var(--border-color); border-radius: 30px; display: flex; justify-content: center; align-items: center; box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3); overflow: hidden; }
 .hero-img { width: 100%; height: 100%; object-fit: cover; transition: transform var(--transition-normal); }
 .hero-image-container:hover .hero-img { transform: scale(1.05); }
 @keyframes blobFloat { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(20px, 20px) scale(1.1); } }
+
 @media (max-width: 1024px) {
   .hero-container { flex-direction: column; text-align: center; gap: 3rem; }
   .hero-content { max-width: 100%; }
@@ -49,6 +51,12 @@
   .hero-btns { justify-content: center; }
   .hero-tech-stack { justify-content: center; }
   .hero-blob { width: 300px; height: 300px; }
+}
+
+@media (max-width: 480px) {
+  .hero-btns { flex-direction: column; width: 100%; }
+  .hero-btns .btn { width: 100%; }
+  .hero-image-container { max-width: 280px; }
 }
 
 /* ABOUT CSS */
@@ -66,8 +74,16 @@
   .about-stats { flex-wrap: wrap; justify-content: center; text-align: center; }
 }
 
+@media (max-width: 480px) {
+  .about-stats { flex-direction: column; gap: 1.5rem; align-items: center; }
+}
+
 /* SKILLS CSS */
 .skills-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2.5rem; margin-top: 2rem; }
+@media (max-width: 480px) {
+  .skills-grid { grid-template-columns: 1fr; }
+}
+
 .skill-category { position: relative; overflow: hidden; border: 1px solid var(--border-color); background: linear-gradient(145deg, var(--bg-secondary), rgba(255, 255, 255, 0.02)); backdrop-filter: blur(10px); }
 .skill-category::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: var(--accent-gradient); opacity: 0; transition: var(--transition-normal); }
 .skill-category:hover::before { opacity: 1; }
@@ -85,7 +101,11 @@
 @keyframes skillFill { from { transform: scaleX(0); } to { transform: scaleX(1); } }
 
 /* SERVICES CSS */
-.services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+.services-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2rem; }
+@media (max-width: 480px) {
+  .services-grid { grid-template-columns: 1fr; }
+}
+
 .service-card { padding: 3rem 2rem; display: flex; flex-direction: column; align-items: center; text-align: center; gap: 1.5rem; }
 .service-icon-wrapper { width: 70px; height: 70px; border-radius: 20px; background: var(--accent-gradient); display: flex; justify-content: center; align-items: center; font-size: 2.5rem; color: white; margin-bottom: 0.5rem; box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3); }
 .service-features { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 0.75rem; text-align: left; width: 100%; margin-top: 1rem; }
@@ -93,7 +113,11 @@
 .service-features i { color: var(--success); font-size: 1.25rem; }
 
 /* PROJECTS CSS */
-.projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; }
+.projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; }
+@media (max-width: 480px) {
+  .projects-grid { grid-template-columns: 1fr; }
+}
+
 .project-card { display: flex; flex-direction: column; padding: 0; overflow: hidden; height: 100%; }
 .project-image { position: relative; height: 220px; background: var(--bg-tertiary); display: flex; justify-content: center; align-items: center; }
 .project-placeholder-icon { font-size: 4rem; color: var(--accent-primary); opacity: 0.2; }
@@ -105,6 +129,10 @@
 
 /* CONTACT CSS */
 .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: start; }
+@media (max-width: 968px) {
+  .contact-grid { grid-template-columns: 1fr; gap: 3rem; }
+}
+
 .contact-list { display: flex; flex-direction: column; gap: 2rem; margin-bottom: 3rem; }
 .contact-item { display: flex; align-items: center; gap: 1.5rem; }
 .contact-icon-box { width: 50px; height: 50px; border-radius: 12px; background: rgba(99, 102, 241, 0.1); display: flex; justify-content: center; align-items: center; font-size: 1.5rem; color: var(--accent-primary); }
@@ -116,7 +144,8 @@
 
 /* FOOTER CSS */
 .footer { padding: 4rem 0 2rem; border-top: 1px solid var(--border-color); margin-top: 4rem; }
-.footer-bottom { display: flex; justify-content: space-between; align-items: center; color: var(--text-tertiary); font-size: 0.875rem; }
+.footer-container { display: flex; flex-direction: column; gap: 2rem; }
+.footer-bottom { display: flex; justify-content: space-between; align-items: center; color: var(--text-tertiary); font-size: 0.875rem; border-top: 1px solid var(--border-color); padding-top: 2rem; }
 
 @media (max-width: 640px) {
   .footer-bottom { flex-direction: column; gap: 1.5rem; text-align: center; }

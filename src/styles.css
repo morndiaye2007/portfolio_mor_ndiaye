@@ -62,13 +62,13 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 .heading-lg {
-  font-size: clamp(2.5rem, 5vw, 4.5rem);
+  font-size: clamp(2rem, 8vw, 4.5rem);
   font-weight: 800;
   letter-spacing: -0.04em;
 }
 
 .heading-md {
-  font-size: clamp(2rem, 4vw, 3rem);
+  font-size: clamp(1.5rem, 6vw, 3rem);
   margin-bottom: 2rem;
   text-align: center;
 }
@@ -97,6 +97,12 @@ h1, h2, h3, h4, h5, h6 {
   padding: var(--section-padding);
 }
 
+@media (max-width: 768px) {
+  :root {
+    --section-padding: 40px 15px;
+  }
+}
+
 /* Buttons */
 .btn {
   display: inline-flex;
@@ -111,6 +117,14 @@ h1, h2, h3, h4, h5, h6 {
   transition: all var(--transition-normal);
   text-decoration: none;
   border: none;
+}
+
+@media (max-width: 480px) {
+  .btn {
+    padding: 0.65rem 1.25rem;
+    font-size: 0.95rem;
+    width: 100%;
+  }
 }
 
 .btn-primary {
@@ -152,6 +166,12 @@ h1, h2, h3, h4, h5, h6 {
   border-radius: 20px;
   padding: 2rem;
   transition: all var(--transition-normal);
+}
+
+@media (max-width: 480px) {
+  .card {
+    padding: 1.5rem;
+  }
 }
 
 .card:hover {
