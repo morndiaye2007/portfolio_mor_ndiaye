@@ -14,18 +14,43 @@
   --text-secondary: #CBD5E1;
   --text-tertiary: #94A3B8;
   
-  /* Accents - Luminous Violet/Indigo & Cyan Gradients */
-  --accent-primary: #6366F1;
-  --accent-secondary: #8B5CF6;
-  --accent-tertiary: #A855F7;
-  --accent-cyan: #06B6D4;
-  --accent-pink: #EC4899;
-  --accent-gradient: linear-gradient(135deg, #6366F1 0%, #8B5CF6 50%, #A855F7 100%);
-  --accent-glow: rgba(99, 102, 241, 0.3);
+  /* ============================================================
+     CHARTE GRAPHIQUE VIVANTE (3 COULEURS VIBRANTES & LUMINEUSES)
+     ============================================================ */
+  /* Couleur 1 : BLEU ÉLECTRIQUE / ROYAL (Backend, Robustesse, Systèmes) */
+  --c-indigo: #3B82F6;
+  --c-indigo-light: #60A5FA;
+  --c-indigo-dark: #1D4ED8;
+  --c-indigo-glow: rgba(59, 130, 246, 0.55);
+  --gradient-indigo: linear-gradient(135deg, #1D4ED8 0%, #3B82F6 50%, #60A5FA 100%);
+
+  /* Couleur 2 : CYAN NÉON / TURQUOISE (Frontend, Mobile, Innovation) */
+  --c-cyan: #00D2FF;
+  --c-cyan-light: #67E8F9;
+  --c-cyan-dark: #0284C7;
+  --c-cyan-glow: rgba(0, 210, 255, 0.55);
+  --gradient-cyan: linear-gradient(135deg, #0284C7 0%, #00D2FF 50%, #00F5D4 100%);
+
+  /* Couleur 3 : VIOLET FUCHSIA / AMÉTHYSTE VIBRANT (Services, Créativité, Fullstack) */
+  --c-violet: #D946EF;
+  --c-violet-light: #F472B6;
+  --c-violet-dark: #8B5CF6;
+  --c-violet-glow: rgba(217, 70, 239, 0.55);
+  --gradient-violet: linear-gradient(135deg, #8B5CF6 0%, #D946EF 50%, #F43F5E 100%);
+
+  /* Dégradé Signature Tri-Couleur Ultra-Vibrant */
+  --gradient-tricolor: linear-gradient(135deg, #00D2FF 0%, #3B82F6 45%, #D946EF 80%, #F43F5E 100%);
+  --accent-primary: #3B82F6;
+  --accent-secondary: #D946EF;
+  --accent-tertiary: #00D2FF;
+  --accent-cyan: #00D2FF;
+  --accent-pink: #F43F5E;
+  --accent-gradient: var(--gradient-tricolor);
+  --accent-glow: rgba(59, 130, 246, 0.45);
   
   /* Semantic */
-  --border-color: rgba(255, 255, 255, 0.1);
-  --border-hover: rgba(99, 102, 241, 0.45);
+  --border-color: rgba(255, 255, 255, 0.12);
+  --border-hover: rgba(59, 130, 246, 0.6);
   --success: #10B981;
   --error: #EF4444;
   
@@ -43,8 +68,8 @@
   
   /* Shadows */
   --shadow-card: 0 8px 30px rgba(0, 0, 0, 0.3), 0 0 0 1px var(--border-color);
-  --shadow-card-hover: 0 20px 45px rgba(0, 0, 0, 0.45), 0 0 35px rgba(99, 102, 241, 0.25);
-  --shadow-glow: 0 0 25px rgba(99, 102, 241, 0.35);
+  --shadow-card-hover: 0 20px 45px rgba(0, 0, 0, 0.45), 0 0 35px rgba(59, 130, 246, 0.35);
+  --shadow-glow: 0 0 25px rgba(59, 130, 246, 0.45);
 }
 
 * {
@@ -61,19 +86,19 @@ html {
 
 body {
   font-family: var(--font-main);
-  background-color: var(--bg-primary);
+  background-color: #0A0F1D;
   color: var(--text-primary);
   line-height: 1.6;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* Luminous multi-layered atmospheric ambient lights */
+  /* Radiant, vivid atmospheric ambient mesh lights */
   background-image: 
-    radial-gradient(circle at 15% 10%, rgba(99, 102, 241, 0.18) 0%, transparent 40%),
-    radial-gradient(circle at 85% 20%, rgba(168, 85, 247, 0.16) 0%, transparent 45%),
-    radial-gradient(circle at 50% 55%, rgba(6, 182, 212, 0.12) 0%, transparent 45%),
-    radial-gradient(circle at 20% 85%, rgba(236, 72, 153, 0.12) 0%, transparent 40%),
-    radial-gradient(circle at 80% 90%, rgba(99, 102, 241, 0.14) 0%, transparent 45%);
+    radial-gradient(circle at 10% 8%, rgba(59, 130, 246, 0.28) 0%, transparent 45%),
+    radial-gradient(circle at 90% 15%, rgba(217, 70, 239, 0.25) 0%, transparent 45%),
+    radial-gradient(circle at 50% 45%, rgba(0, 210, 255, 0.22) 0%, transparent 50%),
+    radial-gradient(circle at 15% 75%, rgba(139, 92, 246, 0.25) 0%, transparent 45%),
+    radial-gradient(circle at 85% 90%, rgba(59, 130, 246, 0.26) 0%, transparent 45%);
   background-attachment: fixed;
 }
 
@@ -99,8 +124,9 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 800;
 }
 
-.text-gradient {
-  background: linear-gradient(135deg, #818CF8 0%, #A78BFA 35%, #C084FC 65%, #F472B6 100%);
+.text-gradient,
+.text-gradient-tricolor {
+  background: linear-gradient(135deg, #00D2FF 0%, #3B82F6 35%, #D946EF 70%, #F43F5E 100%);
   background-size: 200% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -109,10 +135,74 @@ h1, h2, h3, h4, h5, h6 {
   animation: gradientShimmer 6s ease infinite;
 }
 
+.text-gradient-indigo {
+  background: linear-gradient(135deg, #93C5FD 0%, #60A5FA 35%, #3B82F6 70%, #1D4ED8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+}
+
+.text-gradient-cyan {
+  background: linear-gradient(135deg, #A7F3D0 0%, #00F5D4 30%, #00D2FF 70%, #0284C7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+}
+
+.text-gradient-violet {
+  background: linear-gradient(135deg, #FBCFE8 0%, #F472B6 30%, #D946EF 70%, #9333EA 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  color: transparent;
+}
+
 @keyframes gradientShimmer {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
+}
+
+/* Badges Dédiés par Couleur - VIVANTS & LUMINEUX */
+.badge-indigo {
+  background: rgba(59, 130, 246, 0.2) !important;
+  border: 1.5px solid rgba(59, 130, 246, 0.55) !important;
+  color: #BFDBFE !important;
+  box-shadow: 0 0 16px rgba(59, 130, 246, 0.28) !important;
+}
+.badge-indigo:hover {
+  background: rgba(59, 130, 246, 0.35) !important;
+  border-color: #60A5FA !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 0 25px rgba(59, 130, 246, 0.6) !important;
+}
+
+.badge-cyan {
+  background: rgba(0, 210, 255, 0.2) !important;
+  border: 1.5px solid rgba(0, 210, 255, 0.55) !important;
+  color: #A5F3FC !important;
+  box-shadow: 0 0 16px rgba(0, 210, 255, 0.28) !important;
+}
+.badge-cyan:hover {
+  background: rgba(0, 210, 255, 0.35) !important;
+  border-color: #00D2FF !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 0 25px rgba(0, 210, 255, 0.6) !important;
+}
+
+.badge-violet {
+  background: rgba(217, 70, 239, 0.2) !important;
+  border: 1.5px solid rgba(217, 70, 239, 0.55) !important;
+  color: #FBCFE8 !important;
+  box-shadow: 0 0 16px rgba(217, 70, 239, 0.28) !important;
+}
+.badge-violet:hover {
+  background: rgba(217, 70, 239, 0.35) !important;
+  border-color: #D946EF !important;
+  color: #FFFFFF !important;
+  box-shadow: 0 0 25px rgba(217, 70, 239, 0.6) !important;
 }
 
 .subtitle {

@@ -1,5 +1,6 @@
 import { Component, OnInit, HostListener, AfterViewInit, ElementRef, QueryList, ViewChildren } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatButtonModule } from '@angular/material/button';
@@ -22,6 +23,7 @@ import { Project, ProjectDialogComponent } from './project-dialog.component';
   standalone: true,
   imports: [
     CommonModule,
+    FormsModule,
     RouterOutlet,
     MatToolbarModule,
     MatButtonModule,
@@ -187,12 +189,12 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   projects: Project[] = [
     {
-      id: 'don-sang-web',
-      title: 'Don de Sang - Portail Web',
+      id: 'don-sang-portail',
+      title: 'Don de Sang - Portail',
       subtitle: 'Système Centralisé de Gestion des Banques de Sang & Hôpitaux',
       category: 'web',
       categoryLabel: 'Portail Web & Backend',
-      shortDescription: 'Plateforme web administrative et médicale permettant la gestion en temps réel des stocks de sang, la planification des collectes et le suivi des dons.',
+      shortDescription: 'Portail web administratif et médical permettant la gestion en temps réel des stocks de sang, la planification des collectes et le suivi des dons.',
       fullDescription: 'Une solution web complète conçue pour les centres de transfusion sanguine et les hôpitaux. Elle offre un tableau de bord en temps réel pour anticiper les pénuries de poches de sang, gérer les rendez-vous des donneurs, automatiser les alertes d\'urgence et sécuriser la traçabilité des poches de la collecte à la transfusion.',
       icon: 'bx-plus-medical',
       colorGradient: 'linear-gradient(135deg, #EF4444 0%, #B91C1C 100%)',
@@ -206,12 +208,39 @@ export class AppComponent implements OnInit, AfterViewInit {
         'Gestion des dossiers donneurs et historique médical confidentiel'
       ],
       architecture: 'Architecture découplée avec frontend Angular 17 réactif et backend robuste Spring Boot sécurisé avec Spring Security et JWT.',
-      githubUrl: 'https://github.com/morndiaye2007',
+      githubUrl: 'https://gitlab.com/ndiaye_tech/sene-sang-portail',
       liveUrl: '#',
       metrics: [
         { label: 'Gestion', value: 'Temps réel' },
         { label: 'Sécurité', value: 'OAuth2 / JWT' },
-        { label: 'Architecture', value: 'RESTful API' }
+        { label: 'Plateforme', value: 'GitLab' }
+      ]
+    },
+    {
+      id: 'don-sang-web',
+      title: 'Don de Sang - Web',
+      subtitle: 'Plateforme Citoyenne Web & Mobilisation des Donneurs',
+      category: 'web',
+      categoryLabel: 'Application Web',
+      shortDescription: 'Plateforme web citoyenne permettant la sensibilisation, l\'inscription des donneurs, la prise de rendez-vous en ligne et les appels d\'urgence.',
+      fullDescription: 'Portail web public interactif facilitant l\'engagement citoyen pour le don de sang. Il permet aux volontaires de localiser les collectes, de réserver un créneau de don, de tester leur éligibilité et de répondre rapidement aux appels d\'urgence vitale.',
+      icon: 'bx-donate-blood',
+      colorGradient: 'linear-gradient(135deg, #E11D48 0%, #BE123C 100%)',
+      accentColor: '#E11D48',
+      tags: ['Angular', 'Spring Boot', 'Tailwind CSS', 'REST API', 'PostgreSQL'],
+      features: [
+        'Espace citoyen et prise de rendez-vous pour les collectes fixes et mobiles',
+        'Questionnaire préalable d\'éligibilité au don en ligne',
+        'Affichage dynamique des besoins urgents par région',
+        'Suivi des campagnes de sensibilisation et actualités'
+      ],
+      architecture: 'Frontend web Angular communicant avec une API REST Spring Boot performante et sécurisée.',
+      githubUrl: 'https://gitlab.com/ndiaye_tech/sene-sang',
+      liveUrl: '#',
+      metrics: [
+        { label: 'Rendez-vous', value: 'En ligne' },
+        { label: 'Disponibilité', value: '24/7' },
+        { label: 'Plateforme', value: 'GitLab' }
       ]
     },
     {
@@ -222,7 +251,7 @@ export class AppComponent implements OnInit, AfterViewInit {
       categoryLabel: 'Application Mobile',
       shortDescription: 'Application mobile Flutter intuitive pour géolocaliser les centres de collecte, recevoir des notifications d\'urgence vitale et suivre son carnet de don.',
       fullDescription: 'Application mobile dédiée aux citoyens et donneurs de sang réguliers ou occasionnels. Elle facilite l\'acte de donner en géolocalisant les centres les plus proches, en envoyant des notifications push ciblées lors d\'appels d\'urgence correspondant au groupe sanguin du donneur et en fournissant un carnet de santé digitalisé.',
-      icon: 'bx-donate-blood',
+      icon: 'bx-mobile-vibration',
       colorGradient: 'linear-gradient(135deg, #F43F5E 0%, #E11D48 100%)',
       accentColor: '#F43F5E',
       tags: ['Flutter', 'Dart', 'Google Maps API', 'Push Notifications', 'SQLite', 'REST API'],
@@ -234,12 +263,12 @@ export class AppComponent implements OnInit, AfterViewInit {
         'Quiz d\'auto-évaluation d\'éligibilité au don avant déplacement'
       ],
       architecture: 'Application mobile multiplateforme développée sous Flutter avec architecture BLoC, notifications push et consommation d\'APIs REST.',
-      githubUrl: 'https://github.com/morndiaye2007',
+      githubUrl: 'https://gitlab.com/ndiaye_tech/sene-sang',
       liveUrl: '#',
       metrics: [
         { label: 'Plateformes', value: 'Android & iOS' },
         { label: 'Temps Réponse', value: '< 200ms' },
-        { label: 'Notifications', value: 'Temps Réel' }
+        { label: 'Plateforme', value: 'GitLab' }
       ]
     },
     {
@@ -262,12 +291,12 @@ export class AppComponent implements OnInit, AfterViewInit {
         'Espace logistique pour coordonner le transport et la livraison des commandes'
       ],
       architecture: 'Écosystème complet avec Backend Spring Boot, portail web Angular pour la gestion et app mobile Flutter pour les agriculteurs sur le terrain.',
-      githubUrl: 'https://github.com/morndiaye2007',
+      githubUrl: 'https://gitlab.com/ndiaye_tech/agri_connect',
       liveUrl: '#',
       metrics: [
         { label: 'Circuit Court', value: '100% Direct' },
         { label: 'Données Marché', value: 'Quotidiennes' },
-        { label: 'Solution', value: 'Web & Mobile' }
+        { label: 'Plateforme', value: 'GitLab' }
       ]
     },
     {
@@ -319,11 +348,11 @@ export class AppComponent implements OnInit, AfterViewInit {
         'Calcul automatique instantané des marges et de la rentabilité nette par lot'
       ],
       architecture: 'Application mobile Flutter avec gestion d\'état performante, connectée à une API REST sécurisée Spring Boot et base de données PostgreSQL.',
-      githubUrl: 'https://github.com/morndiaye2007',
+      githubUrl: 'https://github.com/morndiaye2007/Smart-Poulailler',
       liveUrl: '#',
       metrics: [
         { label: 'Plateforme', value: 'Mobile Flutter' },
-        { label: 'Gestion', value: 'Bandes & Ventes' },
+        { label: 'Dépôt', value: 'GitHub Public' },
         { label: 'Analytique', value: 'Graphiques' }
       ]
     },
@@ -380,14 +409,58 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.activeFilter = filter;
   }
 
+  contactData = {
+    name: '',
+    email: '',
+    message: ''
+  };
+  isSubmitting = false;
   formSubmitted = false;
+  formError = false;
 
-  submitContactForm(event: Event) {
+  async submitContactForm(event: Event) {
     event.preventDefault();
-    this.formSubmitted = true;
-    setTimeout(() => {
-      this.formSubmitted = false;
-    }, 6000);
+    if (!this.contactData.name || !this.contactData.email || !this.contactData.message) {
+      return;
+    }
+
+    this.isSubmitting = true;
+    this.formSubmitted = false;
+    this.formError = false;
+
+    try {
+      const response = await fetch('https://formsubmit.co/ajax/ndiaye.mor0409@gmail.com', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json'
+        },
+        body: JSON.stringify({
+          name: this.contactData.name,
+          email: this.contactData.email,
+          message: this.contactData.message,
+          _subject: `Nouveau message Portfolio de ${this.contactData.name}`,
+          _template: 'table',
+          _captcha: 'false'
+        })
+      });
+
+      const res = await response.json();
+      if (response.ok && (res.success === 'true' || res.success === true || res.message)) {
+        this.formSubmitted = true;
+        this.contactData = { name: '', email: '', message: '' };
+        setTimeout(() => {
+          this.formSubmitted = false;
+        }, 12000);
+      } else {
+        this.formError = true;
+      }
+    } catch (err) {
+      console.error('Erreur transmission contact:', err);
+      this.formError = true;
+    } finally {
+      this.isSubmitting = false;
+    }
   }
 
   openProjectModal(project: Project) {

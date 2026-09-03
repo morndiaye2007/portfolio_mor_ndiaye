@@ -28,12 +28,12 @@
   <section id="hero" class="hero section" *ngIf="heroVisible" @heroCascade>
     <div class="container hero-container">
       <div class="hero-content">
-        <span class="badge hero-badge hero-anim">
+        <span class="badge badge-indigo hero-badge hero-anim">
           <span class="badge-dot"></span>
           Disponible pour missions & nouveaux projets
         </span>
         <h1 class="heading-lg hero-anim">
-          Développeur <span class="text-gradient">Full Stack & Mobile</span>
+          Développeur <span class="text-gradient-indigo">Full Stack & Mobile</span>
         </h1>
         <p class="subtitle hero-subtitle hero-anim">
           Je conçois et déploie des applications web, mobiles et architectures microservices performantes (Spring Boot, Angular, Flutter), avec une solide expertise en solutions de santé, agritech et gestion d'entreprise.
@@ -48,11 +48,11 @@
         </div>
         
         <div class="hero-tech-stack hero-anim">
-          <span class="tech-pill"><i class='bx bxl-spring-boot'></i> Spring Boot</span>
-          <span class="tech-pill"><i class='bx bxl-angular'></i> Angular</span>
-          <span class="tech-pill"><i class='bx bxl-flutter'></i> Flutter</span>
-          <span class="tech-pill"><i class='bx bxl-postgresql'></i> PostgreSQL</span>
-          <span class="tech-pill"><i class='bx bxl-php'></i> Laravel</span>
+          <span class="tech-pill tech-pill-indigo"><i class='bx bxl-spring-boot'></i> Spring Boot</span>
+          <span class="tech-pill tech-pill-cyan"><i class='bx bxl-angular'></i> Angular</span>
+          <span class="tech-pill tech-pill-cyan"><i class='bx bxl-flutter'></i> Flutter</span>
+          <span class="tech-pill tech-pill-indigo"><i class='bx bxl-postgresql'></i> PostgreSQL</span>
+          <span class="tech-pill tech-pill-violet"><i class='bx bxl-php'></i> Laravel</span>
         </div>
       </div>
       
@@ -66,17 +66,17 @@
   </section>
 
   <!-- ABOUT -->
-  <section id="about" class="about section">
+  <section id="about" class="about section section-theme-cyan">
     <div class="container" *ngIf="aboutVisible">
       <div class="section-header text-center" @fadeInUp>
-        <span class="badge section-badge">Mon Parcours</span>
-        <h2 class="heading-md">À Propos De <span class="text-gradient">Moi</span></h2>
+        <span class="badge badge-cyan section-badge">Mon Parcours</span>
+        <h2 class="heading-md">À Propos De <span class="text-gradient-cyan">Moi</span></h2>
       </div>
       
       <div class="about-grid">
         <div class="about-cards" @slideInLeft>
           <mat-card 
-            class="about-card" 
+            class="about-card about-card-indigo" 
             [class.active-card]="selectedAboutTab === 'backend'"
             (click)="selectAboutTab('backend')"
             matRipple>
@@ -85,7 +85,7 @@
                 <div class="about-card-icon-box">
                   <mat-icon class="card-icon-mat">terminal</mat-icon>
                 </div>
-                <span class="active-indicator" *ngIf="selectedAboutTab === 'backend'">
+                <span class="active-indicator active-indicator-indigo" *ngIf="selectedAboutTab === 'backend'">
                   <mat-icon class="check-indicator-icon">check_circle</mat-icon>
                   Actif
                 </span>
@@ -96,7 +96,7 @@
           </mat-card>
 
           <mat-card 
-            class="about-card" 
+            class="about-card about-card-cyan" 
             [class.active-card]="selectedAboutTab === 'frontend'"
             (click)="selectAboutTab('frontend')"
             matRipple>
@@ -105,7 +105,7 @@
                 <div class="about-card-icon-box">
                   <mat-icon class="card-icon-mat">devices</mat-icon>
                 </div>
-                <span class="active-indicator" *ngIf="selectedAboutTab === 'frontend'">
+                <span class="active-indicator active-indicator-cyan" *ngIf="selectedAboutTab === 'frontend'">
                   <mat-icon class="check-indicator-icon">check_circle</mat-icon>
                   Actif
                 </span>
@@ -117,7 +117,7 @@
         </div>
 
         <div class="about-text" [@aboutTabChange]="selectedAboutTab">
-          <div class="about-focus-badge">
+          <div class="about-focus-badge" [ngClass]="selectedAboutTab === 'backend' ? 'focus-badge-indigo' : 'focus-badge-cyan'">
             <mat-icon class="focus-icon">tune</mat-icon>
             <span>{{ aboutContent[selectedAboutTab].badge }}</span>
           </div>
@@ -128,9 +128,70 @@
           
           <div class="about-stats">
             <div class="stat-item" *ngFor="let st of aboutContent[selectedAboutTab].stats">
-              <span class="stat-num">{{ st.num }}</span>
+              <span class="stat-num" [ngClass]="selectedAboutTab === 'backend' ? 'stat-num-indigo' : 'stat-num-cyan'">{{ st.num }}</span>
               <span class="stat-label">{{ st.label }}</span>
             </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CURSUS ACADÉMIQUE & FORMATION -->
+      <div class="cursus-wrapper" @fadeInUp>
+        <div class="cursus-divider">
+          <span class="cursus-line"></span>
+          <div class="cursus-header-pill">
+            <mat-icon>school</mat-icon>
+            <span>Cursus & Formation Académique</span>
+          </div>
+          <span class="cursus-line"></span>
+        </div>
+
+        <div class="cursus-grid">
+          <!-- 1. Baccalauréat -->
+          <div class="cursus-card cursus-card-violet">
+            <div class="cursus-card-top">
+              <span class="cursus-step-badge badge-violet">Obtenu</span>
+              <div class="cursus-icon-box icon-box-violet">
+                <mat-icon>menu_book</mat-icon>
+              </div>
+            </div>
+            <span class="cursus-level">Enseignement Secondaire</span>
+            <h4 class="cursus-degree-title">Baccalauréat</h4>
+            <p class="cursus-degree-desc">
+              Diplôme d'accès à l'enseignement supérieur, marquant l'entrée dans le cursus académique scientifique et informatique.
+            </p>
+          </div>
+
+          <!-- 2. Licence 3 Génie Logiciel -->
+          <div class="cursus-card cursus-card-indigo">
+            <div class="cursus-card-top">
+              <span class="cursus-step-badge badge-indigo">Diplômé (Bac+3)</span>
+              <div class="cursus-icon-box icon-box-indigo">
+                <mat-icon>history_edu</mat-icon>
+              </div>
+            </div>
+            <span class="cursus-level">Cycle Licence</span>
+            <h4 class="cursus-degree-title">Licence 3 — Génie Logiciel</h4>
+            <p class="cursus-degree-desc">
+              Fondations de l'ingénierie logicielle : algorithmique avancée, modélisation UML, bases de données relationnelles et développement fullstack web & mobile.
+            </p>
+          </div>
+
+          <!-- 3. Actuellement M1 Génie Logiciel -->
+          <div class="cursus-card cursus-card-cyan cursus-card-active">
+            <div class="cursus-card-top">
+              <span class="cursus-step-badge badge-cyan pulse-badge">
+                <span class="live-pulse-dot"></span> Actuellement (M1)
+              </span>
+              <div class="cursus-icon-box icon-box-cyan">
+                <mat-icon>workspace_premium</mat-icon>
+              </div>
+            </div>
+            <span class="cursus-level">Cycle Master (Bac+4)</span>
+            <h4 class="cursus-degree-title">Master 1 — Génie Logiciel</h4>
+            <p class="cursus-degree-desc">
+              Spécialisation avancée : architectures microservices distribuées, streaming d'événements, sécurité logicielle, cloud native et conception de systèmes complexes.
+            </p>
           </div>
         </div>
       </div>
@@ -140,17 +201,20 @@
   <!-- SKILLS -->
   <section id="skills" class="skills section">
     <div class="container" *ngIf="skillsVisible">
-      <h2 class="heading-md" @fadeInUp>Mes <span class="text-gradient">Compétences</span></h2>
+      <div class="section-header text-center" @fadeInUp>
+        <span class="badge badge-indigo section-badge">Expertise Technique</span>
+        <h2 class="heading-md">Mes <span class="text-gradient-indigo">Compétences</span></h2>
+      </div>
       
       <div class="skills-grid" @staggerCards>
         <!-- Frontend -->
-        <mat-card class="skill-category">
+        <mat-card class="skill-category skill-cat-cyan">
           <mat-card-content>
             <div class="category-header">
               <div class="category-icon">
                 <mat-icon>desktop_windows</mat-icon>
               </div>
-              <h3>Frontend</h3>
+              <h3>Frontend & Mobile</h3>
             </div>
             <div class="skill-list" @staggerSkills>
               <div class="skill-anim-item">
@@ -162,7 +226,7 @@
                   <span class="skill-percentage">90%</span>
                 </div>
                 <div class="skill-bar-wrapper">
-                  <div class="skill-bar-fill" style="width: 90%;"></div>
+                  <div class="skill-bar-fill fill-cyan" style="width: 90%;"></div>
                 </div>
               </div>
               <div class="skill-anim-item">
@@ -174,7 +238,7 @@
                   <span class="skill-percentage">85%</span>
                 </div>
                 <div class="skill-bar-wrapper">
-                  <div class="skill-bar-fill" style="width: 85%;"></div>
+                  <div class="skill-bar-fill fill-cyan" style="width: 85%;"></div>
                 </div>
               </div>
               <div class="skill-anim-item">
@@ -186,7 +250,7 @@
                   <span class="skill-percentage">95%</span>
                 </div>
                 <div class="skill-bar-wrapper">
-                  <div class="skill-bar-fill" style="width: 95%;"></div>
+                  <div class="skill-bar-fill fill-cyan" style="width: 95%;"></div>
                 </div>
               </div>
               <div class="skill-anim-item">
@@ -198,7 +262,7 @@
                   <span class="skill-percentage">75%</span>
                 </div>
                 <div class="skill-bar-wrapper">
-                  <div class="skill-bar-fill" style="width: 75%;"></div>
+                  <div class="skill-bar-fill fill-cyan" style="width: 75%;"></div>
                 </div>
               </div>
             </div>
@@ -206,13 +270,13 @@
         </mat-card>
 
         <!-- Backend -->
-        <mat-card class="skill-category">
+        <mat-card class="skill-category skill-cat-indigo">
           <mat-card-content>
             <div class="category-header">
               <div class="category-icon">
                 <mat-icon>dns</mat-icon>
               </div>
-              <h3>Backend</h3>
+              <h3>Backend & Microservices</h3>
             </div>
             <div class="skill-list" @staggerSkills>
               <div class="skill-anim-item">
@@ -224,7 +288,7 @@
                   <span class="skill-percentage">90%</span>
                 </div>
                 <div class="skill-bar-wrapper">
-                  <div class="skill-bar-fill" style="width: 90%;"></div>
+                  <div class="skill-bar-fill fill-indigo" style="width: 90%;"></div>
                 </div>
               </div>
               <div class="skill-anim-item">
@@ -236,7 +300,7 @@
                   <span class="skill-percentage">85%</span>
                 </div>
                 <div class="skill-bar-wrapper">
-                  <div class="skill-bar-fill" style="width: 85%;"></div>
+                  <div class="skill-bar-fill fill-indigo" style="width: 85%;"></div>
                 </div>
               </div>
               <div class="skill-anim-item">
@@ -248,7 +312,7 @@
                   <span class="skill-percentage">70%</span>
                 </div>
                 <div class="skill-bar-wrapper">
-                  <div class="skill-bar-fill" style="width: 70%;"></div>
+                  <div class="skill-bar-fill fill-indigo" style="width: 70%;"></div>
                 </div>
               </div>
               <div class="skill-anim-item">
@@ -260,7 +324,7 @@
                   <span class="skill-percentage">65%</span>
                 </div>
                 <div class="skill-bar-wrapper">
-                  <div class="skill-bar-fill" style="width: 65%;"></div>
+                  <div class="skill-bar-fill fill-indigo" style="width: 65%;"></div>
                 </div>
               </div>
             </div>
@@ -268,13 +332,13 @@
         </mat-card>
 
         <!-- Architecture & Data -->
-        <mat-card class="skill-category">
+        <mat-card class="skill-category skill-cat-violet">
           <mat-card-content>
             <div class="category-header">
               <div class="category-icon">
                 <mat-icon>account_tree</mat-icon>
               </div>
-              <h3>Architecture & Data</h3>
+              <h3>Architecture & Données</h3>
             </div>
             <div class="skill-list" @staggerSkills>
               <div class="skill-anim-item">
@@ -286,7 +350,7 @@
                   <span class="skill-percentage">90%</span>
                 </div>
                 <div class="skill-bar-wrapper">
-                  <div class="skill-bar-fill" style="width: 90%;"></div>
+                  <div class="skill-bar-fill fill-violet" style="width: 90%;"></div>
                 </div>
               </div>
               <div class="skill-anim-item">
@@ -298,7 +362,7 @@
                   <span class="skill-percentage">95%</span>
                 </div>
                 <div class="skill-bar-wrapper">
-                  <div class="skill-bar-fill" style="width: 95%;"></div>
+                  <div class="skill-bar-fill fill-violet" style="width: 95%;"></div>
                 </div>
               </div>
               <div class="skill-anim-item">
@@ -310,7 +374,7 @@
                   <span class="skill-percentage">90%</span>
                 </div>
                 <div class="skill-bar-wrapper">
-                  <div class="skill-bar-fill" style="width: 90%;"></div>
+                  <div class="skill-bar-fill fill-violet" style="width: 90%;"></div>
                 </div>
               </div>
               <div class="skill-anim-item">
@@ -322,7 +386,7 @@
                   <span class="skill-percentage">90%</span>
                 </div>
                 <div class="skill-bar-wrapper">
-                  <div class="skill-bar-fill" style="width: 90%;"></div>
+                  <div class="skill-bar-fill fill-violet" style="width: 90%;"></div>
                 </div>
               </div>
             </div>
@@ -333,55 +397,58 @@
   </section>
 
   <!-- SERVICES -->
-  <section id="services" class="services section bg-secondary-alt">
+  <section id="services" class="services section section-theme-violet">
     <div class="container" *ngIf="servicesVisible">
-      <h2 class="heading-md" @fadeInUp>Mes <span class="text-gradient">Services</span></h2>
+      <div class="section-header text-center" @fadeInUp>
+        <span class="badge badge-violet section-badge">Offre de Services</span>
+        <h2 class="heading-md">Mes <span class="text-gradient-violet">Services</span></h2>
+      </div>
       
       <div class="services-grid" @staggerCards>
-        <mat-card class="service-card" matRipple>
+        <mat-card class="service-card service-card-indigo" matRipple>
           <mat-card-content>
-            <div class="service-icon-wrapper">
+            <div class="service-icon-wrapper service-icon-indigo">
               <mat-icon>code</mat-icon>
             </div>
             <h3>Développement Web</h3>
             <p>Conception d'applications web modernes et performantes avec Angular, optimisées pour tous les supports.</p>
             <mat-divider></mat-divider>
             <ul class="service-features">
-              <li><mat-icon class="check-icon">check_circle</mat-icon> Single Page Applications</li>
-              <li><mat-icon class="check-icon">check_circle</mat-icon> SEO Friendly</li>
-              <li><mat-icon class="check-icon">check_circle</mat-icon> UX/UI Moderne</li>
+              <li><mat-icon class="check-icon check-indigo">check_circle</mat-icon> Single Page Applications</li>
+              <li><mat-icon class="check-icon check-indigo">check_circle</mat-icon> SEO Friendly</li>
+              <li><mat-icon class="check-icon check-indigo">check_circle</mat-icon> UX/UI Moderne</li>
             </ul>
           </mat-card-content>
         </mat-card>
 
-        <mat-card class="service-card" matRipple>
+        <mat-card class="service-card service-card-cyan" matRipple>
           <mat-card-content>
-            <div class="service-icon-wrapper">
+            <div class="service-icon-wrapper service-icon-cyan">
               <mat-icon>dns</mat-icon>
             </div>
             <h3>Architecture Backend</h3>
             <p>Mise en place de systèmes robustes et scalables en Java/Spring Boot ou Laravel, maîtrisant les architectures monolithiques et microservices.</p>
             <mat-divider></mat-divider>
             <ul class="service-features">
-              <li><mat-icon class="check-icon">check_circle</mat-icon> APIs RESTful</li>
-              <li><mat-icon class="check-icon">check_circle</mat-icon> Microservices</li>
-              <li><mat-icon class="check-icon">check_circle</mat-icon> Sécurité & Auth (JWT/OAuth2)</li>
+              <li><mat-icon class="check-icon check-cyan">check_circle</mat-icon> APIs RESTful</li>
+              <li><mat-icon class="check-icon check-cyan">check_circle</mat-icon> Microservices</li>
+              <li><mat-icon class="check-icon check-cyan">check_circle</mat-icon> Sécurité & Auth (JWT/OAuth2)</li>
             </ul>
           </mat-card-content>
         </mat-card>
 
-        <mat-card class="service-card" matRipple>
+        <mat-card class="service-card service-card-violet" matRipple>
           <mat-card-content>
-            <div class="service-icon-wrapper">
+            <div class="service-icon-wrapper service-icon-violet">
               <mat-icon>smartphone</mat-icon>
             </div>
             <h3>Applications Mobiles</h3>
             <p>Développement d'applications mobiles cross-platform avec Flutter pour une expérience native sur iOS et Android.</p>
             <mat-divider></mat-divider>
             <ul class="service-features">
-              <li><mat-icon class="check-icon">check_circle</mat-icon> Multi-plateformes</li>
-              <li><mat-icon class="check-icon">check_circle</mat-icon> Performance Native</li>
-              <li><mat-icon class="check-icon">check_circle</mat-icon> Intégration APIs & Services REST</li>
+              <li><mat-icon class="check-icon check-violet">check_circle</mat-icon> Multi-plateformes</li>
+              <li><mat-icon class="check-icon check-violet">check_circle</mat-icon> Performance Native</li>
+              <li><mat-icon class="check-icon check-violet">check_circle</mat-icon> Intégration APIs & Services REST</li>
             </ul>
           </mat-card-content>
         </mat-card>
@@ -400,7 +467,8 @@
         </p>
       </div>
 
-      <!-- Filter Toggles -->
+      <!-- Filter Toggles (Commentés à la demande) -->
+      <!--
       <div class="project-filters" @fadeInUp>
         <mat-button-toggle-group [value]="activeFilter" (change)="setFilter($event.value)" class="filter-toggle-group">
           <mat-button-toggle value="all">
@@ -425,6 +493,7 @@
           </mat-button-toggle>
         </mat-button-toggle-group>
       </div>
+      -->
       
       <!-- Projects Grid -->
       <div class="projects-grid" @filterChange>
@@ -439,7 +508,11 @@
             <div class="project-icon-badge" [style.background]="project.colorGradient">
               <i class='bx' [ngClass]="project.icon"></i>
             </div>
-            <span class="project-category-pill">{{ project.categoryLabel }}</span>
+            <span 
+              class="project-category-pill" 
+              [ngClass]="project.category === 'mobile' ? 'pill-cyan' : (project.category === 'backend' ? 'pill-violet' : 'pill-indigo')">
+              {{ project.categoryLabel }}
+            </span>
           </div>
 
           <mat-card-content class="project-info">
@@ -465,8 +538,8 @@
               <button mat-flat-button class="btn-detail-action" (click)="openProjectModal(project); $event.stopPropagation()">
                 <mat-icon>info_outline</mat-icon> Voir Détails
               </button>
-              <a *ngIf="project.githubUrl" [href]="project.githubUrl" target="_blank" mat-icon-button class="project-icon-btn" matTooltip="Code source GitHub" (click)="$event.stopPropagation()">
-                <i class='bx bxl-github' style="font-size: 1.35rem;"></i>
+              <a *ngIf="project.githubUrl" [href]="project.githubUrl" target="_blank" mat-icon-button class="project-icon-btn" [matTooltip]="project.githubUrl.includes('gitlab.com') ? 'Dépôt GitLab' : 'Dépôt GitHub'" (click)="$event.stopPropagation()">
+                <i [class]="project.githubUrl.includes('gitlab.com') ? 'bx bxl-gitlab gitlab-icon' : 'bx bxl-github github-icon'" style="font-size: 1.35rem;"></i>
               </a>
               <a *ngIf="project.liveUrl && project.liveUrl !== '#'" [href]="project.liveUrl" target="_blank" mat-icon-button class="project-icon-btn" matTooltip="Voir la démo" (click)="$event.stopPropagation()">
                 <mat-icon>open_in_new</mat-icon>
@@ -479,9 +552,12 @@
   </section>
 
   <!-- CONTACT -->
-  <section id="contact" class="contact section">
+  <section id="contact" class="contact section section-theme-indigo">
     <div class="container" *ngIf="contactVisible">
-      <h2 class="heading-md" @fadeInUp>Parlons De <span class="text-gradient">Votre Projet</span></h2>
+      <div class="section-header text-center" @fadeInUp>
+        <span class="badge badge-violet section-badge">Collaboration</span>
+        <h2 class="heading-md">Parlons De <span class="text-gradient-violet">Votre Projet</span></h2>
+      </div>
       
       <div class="contact-grid">
         <div class="contact-info" @slideInLeft>
@@ -492,14 +568,14 @@
           
           <div class="contact-list">
             <div class="contact-item">
-              <div class="contact-icon-box"><mat-icon>email</mat-icon></div>
+              <div class="contact-icon-box contact-box-indigo"><mat-icon>email</mat-icon></div>
               <div class="contact-text">
                 <span>Email</span>
                 <p><a href="mailto:ndiaye.mor0409@gmail.com" class="contact-link">ndiaye.mor0409&#64;gmail.com</a></p>
               </div>
             </div>
             <div class="contact-item">
-              <div class="contact-icon-box"><mat-icon>location_on</mat-icon></div>
+              <div class="contact-icon-box contact-box-cyan"><mat-icon>location_on</mat-icon></div>
               <div class="contact-text">
                 <span>Localisation</span>
                 <p>Dakar, Sénégal (Disponible en remote)</p>
@@ -538,6 +614,7 @@
                     type="text" 
                     id="contact-name" 
                     name="name" 
+                    [(ngModel)]="contactData.name"
                     required 
                     placeholder="Ex: Amadou Diallo" 
                     class="custom-text-input">
@@ -554,6 +631,7 @@
                     type="email" 
                     id="contact-email" 
                     name="email" 
+                    [(ngModel)]="contactData.email"
                     required 
                     placeholder="Ex: amadou@example.com" 
                     class="custom-text-input">
@@ -569,6 +647,7 @@
                   <textarea 
                     id="contact-message" 
                     name="message" 
+                    [(ngModel)]="contactData.message"
                     rows="4" 
                     required 
                     placeholder="Parlez-moi de votre besoin, objectifs, calendrier ou technologies souhaitées..." 
@@ -576,14 +655,26 @@
                 </div>
               </div>
 
-              <button mat-flat-button class="btn-submit-modern" type="submit">
-                <mat-icon>send</mat-icon>
-                <span>Envoyer le Message</span>
+              <button mat-flat-button class="btn-submit-modern" type="submit" [disabled]="isSubmitting">
+                <mat-icon *ngIf="!isSubmitting">send</mat-icon>
+                <mat-icon *ngIf="isSubmitting" class="spin-icon">autorenew</mat-icon>
+                <span>{{ isSubmitting ? 'Transmission en cours...' : 'Envoyer le Message' }}</span>
               </button>
 
               <div *ngIf="formSubmitted" class="form-success-banner">
                 <mat-icon class="success-icon">check_circle</mat-icon>
-                <span>Merci beaucoup ! Votre message a bien été envoyé.</span>
+                <div class="banner-body">
+                  <strong>Message transmis avec succès !</strong>
+                  <p>Votre message a été envoyé directement dans ma boîte mail (<strong>ndiaye.mor0409&#64;gmail.com</strong>). Je vous répondrai dans les plus brefs délais.</p>
+                </div>
+              </div>
+
+              <div *ngIf="formError" class="form-error-banner">
+                <mat-icon class="error-icon">error_outline</mat-icon>
+                <div class="banner-body">
+                  <strong>Transmission directe indisponible</strong>
+                  <p>Vous pouvez m'écrire directement par email à <a href="mailto:ndiaye.mor0409@gmail.com" class="direct-mail-link">ndiaye.mor0409&#64;gmail.com</a>.</p>
+                </div>
               </div>
             </form>
           </div>
