@@ -416,6 +416,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   };
   isSubmitting = false;
   formSubmitted = false;
+  needsActivation = false;
   formError = false;
 
   async submitContactForm(event: Event) {
@@ -426,6 +427,7 @@ export class AppComponent implements OnInit, AfterViewInit {
 
     this.isSubmitting = true;
     this.formSubmitted = false;
+    this.needsActivation = false;
     this.formError = false;
 
     try {
@@ -446,12 +448,14 @@ export class AppComponent implements OnInit, AfterViewInit {
       });
 
       const res = await response.json();
-      if (response.ok && (res.success === 'true' || res.success === true || res.message)) {
+      if (response.ok && (res.success === 'true' || res.success === true || (res.message && res.message.includes('Activation')))) {
         this.formSubmitted = true;
+        this.needsActivation = !!(res.message && res.message.includes('Activation'));
         this.contactData = { name: '', email: '', message: '' };
         setTimeout(() => {
           this.formSubmitted = false;
-        }, 12000);
+          this.needsActivation = false;
+        }, 15000);
       } else {
         this.formError = true;
       }

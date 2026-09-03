@@ -662,10 +662,14 @@
               </button>
 
               <div *ngIf="formSubmitted" class="form-success-banner">
-                <mat-icon class="success-icon">check_circle</mat-icon>
-                <div class="banner-body">
+                <mat-icon class="success-icon">{{ needsActivation ? 'mark_email_unread' : 'check_circle' }}</mat-icon>
+                <div class="banner-body" *ngIf="!needsActivation">
                   <strong>Message transmis avec succès !</strong>
                   <p>Votre message a été envoyé directement dans ma boîte mail (<strong>ndiaye.mor0409&#64;gmail.com</strong>). Je vous répondrai dans les plus brefs délais.</p>
+                </div>
+                <div class="banner-body" *ngIf="needsActivation">
+                  <strong>Confirmation d'activation requise</strong>
+                  <p>Un email de validation vient d'être envoyé à <strong>ndiaye.mor0409&#64;gmail.com</strong>. Cliquez sur <em>« Activate Form »</em> dans votre boîte Gmail pour activer la réception immédiate !</p>
                 </div>
               </div>
 
