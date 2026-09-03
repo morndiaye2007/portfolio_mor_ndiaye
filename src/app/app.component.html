@@ -1,5 +1,5 @@
-<!-- HEADER -->
-<header class="header">
+<!-- HEADER / TOOLBAR -->
+<mat-toolbar class="header-toolbar">
   <div class="container header-container">
     <a href="#" class="logo">
       <span class="logo-text">MN<span class="logo-dot">.</span></span>
@@ -12,48 +12,51 @@
       <a href="#services" (click)="closeMenu()">Services</a>
       <a href="#projects" (click)="closeMenu()">Projets</a>
       <a href="#contact" (click)="closeMenu()">Contact</a>
-      <!-- CV Link - adjust path if needed -->
-      <a href="assets/cv_mor_ndiaye.pdf" target="_blank" class="btn btn-primary btn-sm" (click)="closeMenu()">
-        <i class='bx bx-download'></i> CV
+      <a href="assets/cv_mor_ndiaye.pdf" target="_blank" mat-flat-button class="cv-btn" (click)="closeMenu()">
+        <mat-icon>download</mat-icon> CV
       </a>
     </nav>
 
-    <button class="menu-toggle" (click)="toggleMenu()" aria-label="Toggle Menu">
-      <i class='bx' [class.bx-menu]="!isMenuOpen" [class.bx-x]="isMenuOpen"></i>
+    <button mat-icon-button class="menu-toggle" (click)="toggleMenu()" aria-label="Toggle Menu">
+      <mat-icon>{{ isMenuOpen ? 'close' : 'menu' }}</mat-icon>
     </button>
   </div>
-</header>
+</mat-toolbar>
 
 <main>
   <!-- HERO -->
-  <section id="hero" class="hero section">
+  <section id="hero" class="hero section" *ngIf="heroVisible" @heroCascade>
     <div class="container hero-container">
-      <div class="hero-content animate-fade-up">
-        <span class="badge hero-badge">
+      <div class="hero-content">
+        <span class="badge hero-badge hero-anim">
           <span class="badge-dot"></span>
           Disponible pour missions & nouveaux projets
         </span>
-        <h1 class="heading-lg">
+        <h1 class="heading-lg hero-anim">
           Développeur <span class="text-gradient">Full Stack & Mobile</span>
         </h1>
-        <p class="subtitle hero-subtitle">
-          Je conçois et déploie des applications web, mobiles et architectures microservices performantes (Spring Boot, Angular, Flutter), avec une expertise reconnue dans les secteurs de la santé, de l'agritech et des solutions de gestion d'entreprise.
+        <p class="subtitle hero-subtitle hero-anim">
+          Je conçois et déploie des applications web, mobiles et architectures microservices performantes (Spring Boot, Angular, Flutter), avec une solide expertise en solutions de santé, agritech et gestion d'entreprise.
         </p>
-        <div class="hero-btns">
-          <a href="#projects" class="btn btn-gradient"><i class='bx bx-folder-open'></i> Découvrir mes projets</a>
-          <a href="#contact" class="btn btn-outline"><i class='bx bx-paper-plane'></i> Me contacter</a>
+        <div class="hero-btns hero-anim">
+          <a href="#projects" mat-flat-button class="btn-hero-primary">
+            <mat-icon>folder_open</mat-icon> Découvrir mes projets
+          </a>
+          <a href="#contact" mat-stroked-button class="btn-hero-outline">
+            <mat-icon>send</mat-icon> Me contacter
+          </a>
         </div>
         
-        <div class="hero-tech-stack">
-          <span class="tech-item"><i class='bx bxl-spring-boot'></i> Spring Boot</span>
-          <span class="tech-item"><i class='bx bxl-angular'></i> Angular</span>
-          <span class="tech-item"><i class='bx bxl-flutter'></i> Flutter</span>
-          <span class="tech-item"><i class='bx bxl-postgresql'></i> PostgreSQL</span>
-          <span class="tech-item"><i class='bx bxl-php'></i> Laravel</span>
+        <div class="hero-tech-stack hero-anim">
+          <span class="tech-pill"><i class='bx bxl-spring-boot'></i> Spring Boot</span>
+          <span class="tech-pill"><i class='bx bxl-angular'></i> Angular</span>
+          <span class="tech-pill"><i class='bx bxl-flutter'></i> Flutter</span>
+          <span class="tech-pill"><i class='bx bxl-postgresql'></i> PostgreSQL</span>
+          <span class="tech-pill"><i class='bx bxl-php'></i> Laravel</span>
         </div>
       </div>
       
-      <div class="hero-visual animate-fade-up" style="animation-delay: 0.2s;">
+      <div class="hero-visual hero-anim">
         <div class="hero-blob"></div>
         <div class="hero-image-container">
           <img src="assets/profile.jpeg" alt="Mor Ndiaye" class="hero-img">
@@ -64,47 +67,70 @@
 
   <!-- ABOUT -->
   <section id="about" class="about section">
-    <div class="container">
-      <div class="section-header text-center animate-fade-up">
+    <div class="container" *ngIf="aboutVisible">
+      <div class="section-header text-center" @fadeInUp>
         <span class="badge section-badge">Mon Parcours</span>
         <h2 class="heading-md">À Propos De <span class="text-gradient">Moi</span></h2>
       </div>
       
       <div class="about-grid">
-        <div class="about-text animate-fade-up">
-          <p>
-            Développeur Full Stack et Mobile rigoureux et passionné, j'accompagne les entreprises et organisations dans la conception de solutions logicielles innovantes, fiables et évolutives.
-          </p>
-          <p>
-            Fort d'une solide maîtrise du développement backend avec <strong>Java / Spring Boot</strong> et des technologies frontend & mobiles modernes (<strong>Angular</strong>, <strong>Flutter</strong>), j'ai conçu des plateformes à fort impact : portails de santé et don de sang, gestion d'élevages avicoles (Smart Poulailler), marketplaces agricoles (AgriConnect), ERP de gestion pharmaceutique et architectures logicielles modulaires.
-          </p>
+        <div class="about-cards" @slideInLeft>
+          <mat-card 
+            class="about-card" 
+            [class.active-card]="selectedAboutTab === 'backend'"
+            (click)="selectAboutTab('backend')"
+            matRipple>
+            <mat-card-content>
+              <div class="about-card-top">
+                <div class="about-card-icon-box">
+                  <mat-icon class="card-icon-mat">terminal</mat-icon>
+                </div>
+                <span class="active-indicator" *ngIf="selectedAboutTab === 'backend'">
+                  <mat-icon class="check-indicator-icon">check_circle</mat-icon>
+                  Actif
+                </span>
+              </div>
+              <h3>Backend & Architecture Microservices</h3>
+              <p>Conception d'APIs RESTful sécurisées, streaming d'événements (Kafka) et modélisation de bases relationnelles (PostgreSQL/MySQL).</p>
+            </mat-card-content>
+          </mat-card>
+
+          <mat-card 
+            class="about-card" 
+            [class.active-card]="selectedAboutTab === 'frontend'"
+            (click)="selectAboutTab('frontend')"
+            matRipple>
+            <mat-card-content>
+              <div class="about-card-top">
+                <div class="about-card-icon-box">
+                  <mat-icon class="card-icon-mat">devices</mat-icon>
+                </div>
+                <span class="active-indicator" *ngIf="selectedAboutTab === 'frontend'">
+                  <mat-icon class="check-indicator-icon">check_circle</mat-icon>
+                  Actif
+                </span>
+              </div>
+              <h3>Frontend & Mobile Multiplateforme</h3>
+              <p>Développement d'interfaces web réactives sous Angular et d'applications mobiles fluides avec Flutter (iOS & Android).</p>
+            </mat-card-content>
+          </mat-card>
+        </div>
+
+        <div class="about-text" [@aboutTabChange]="selectedAboutTab">
+          <div class="about-focus-badge">
+            <mat-icon class="focus-icon">tune</mat-icon>
+            <span>{{ aboutContent[selectedAboutTab].badge }}</span>
+          </div>
+
+          <h3 class="about-focus-title">{{ aboutContent[selectedAboutTab].title }}</h3>
+
+          <p *ngFor="let para of aboutContent[selectedAboutTab].paragraphs" [innerHTML]="para"></p>
           
           <div class="about-stats">
-            <div class="stat-item">
-              <span class="stat-num">3+</span>
-              <span class="stat-label">Années d'Expérience</span>
+            <div class="stat-item" *ngFor="let st of aboutContent[selectedAboutTab].stats">
+              <span class="stat-num">{{ st.num }}</span>
+              <span class="stat-label">{{ st.label }}</span>
             </div>
-            <div class="stat-item">
-              <span class="stat-num">15+</span>
-              <span class="stat-label">Projets Conçus</span>
-            </div>
-            <div class="stat-item">
-              <span class="stat-num">100%</span>
-              <span class="stat-label">Engagement Qualité</span>
-            </div>
-          </div>
-        </div>
-        
-        <div class="about-cards animate-fade-up" style="animation-delay: 0.2s;">
-          <div class="card about-card">
-            <i class='bx bx-code-block card-icon'></i>
-            <h3>Backend & Architecture Microservices</h3>
-            <p>Conception d'APIs RESTful sécurisées, streaming d'événements (Kafka) et modélisation de bases relationnelles (PostgreSQL/MySQL).</p>
-          </div>
-          <div class="card about-card">
-            <i class='bx bx-devices card-icon'></i>
-            <h3>Frontend & Mobile Multiplateforme</h3>
-            <p>Développement d'interfaces web réactives sous Angular et d'applications mobiles fluides avec Flutter (iOS & Android).</p>
           </div>
         </div>
       </div>
@@ -113,221 +139,260 @@
 
   <!-- SKILLS -->
   <section id="skills" class="skills section">
-    <div class="container">
-      <h2 class="heading-md">Mes <span class="text-gradient">Compétences</span></h2>
+    <div class="container" *ngIf="skillsVisible">
+      <h2 class="heading-md" @fadeInUp>Mes <span class="text-gradient">Compétences</span></h2>
       
-      <div class="skills-grid">
+      <div class="skills-grid" @staggerCards>
         <!-- Frontend -->
-        <div class="card skill-category animate-fade-up">
-          <div class="category-header">
-            <div class="category-icon">
-              <i class='bx bx-desktop'></i>
-            </div>
-            <h3>Frontend</h3>
-          </div>
-          <div class="skill-list">
-            <div class="skill-item">
-              <div class="skill-info">
-                <div class="skill-name-wrapper">
-                  <i class='bx bxl-angular'></i>
-                  <span class="skill-name">Angular</span>
-                </div>
-                <span class="skill-percentage">90%</span>
+        <mat-card class="skill-category">
+          <mat-card-content>
+            <div class="category-header">
+              <div class="category-icon">
+                <mat-icon>desktop_windows</mat-icon>
               </div>
-              <div class="skill-bar"><div class="skill-progress" style="width: 90%;"></div></div>
+              <h3>Frontend</h3>
             </div>
-            <div class="skill-item">
-              <div class="skill-info">
-                <div class="skill-name-wrapper">
-                  <i class='bx bxl-typescript'></i>
-                  <span class="skill-name">TypeScript</span>
+            <div class="skill-list" @staggerSkills>
+              <div class="skill-anim-item">
+                <div class="skill-info">
+                  <div class="skill-name-wrapper">
+                    <i class='bx bxl-angular'></i>
+                    <span class="skill-name">Angular</span>
+                  </div>
+                  <span class="skill-percentage">90%</span>
                 </div>
-                <span class="skill-percentage">85%</span>
-              </div>
-              <div class="skill-bar"><div class="skill-progress" style="width: 85%;"></div></div>
-            </div>
-            <div class="skill-item">
-              <div class="skill-info">
-                <div class="skill-name-wrapper">
-                  <i class='bx bxl-html5'></i>
-                  <span class="skill-name">HTML5 / CSS3</span>
+                <div class="skill-bar-wrapper">
+                  <div class="skill-bar-fill" style="width: 90%;"></div>
                 </div>
-                <span class="skill-percentage">95%</span>
               </div>
-              <div class="skill-bar"><div class="skill-progress" style="width: 95%;"></div></div>
-            </div>
-            <div class="skill-item">
-              <div class="skill-info">
-                <div class="skill-name-wrapper">
-                  <i class='bx bxl-flutter'></i>
-                  <span class="skill-name">Flutter</span>
+              <div class="skill-anim-item">
+                <div class="skill-info">
+                  <div class="skill-name-wrapper">
+                    <i class='bx bxl-typescript'></i>
+                    <span class="skill-name">TypeScript</span>
+                  </div>
+                  <span class="skill-percentage">85%</span>
                 </div>
-                <span class="skill-percentage">75%</span>
+                <div class="skill-bar-wrapper">
+                  <div class="skill-bar-fill" style="width: 85%;"></div>
+                </div>
               </div>
-              <div class="skill-bar"><div class="skill-progress" style="width: 75%;"></div></div>
+              <div class="skill-anim-item">
+                <div class="skill-info">
+                  <div class="skill-name-wrapper">
+                    <i class='bx bxl-html5'></i>
+                    <span class="skill-name">HTML5 / CSS3</span>
+                  </div>
+                  <span class="skill-percentage">95%</span>
+                </div>
+                <div class="skill-bar-wrapper">
+                  <div class="skill-bar-fill" style="width: 95%;"></div>
+                </div>
+              </div>
+              <div class="skill-anim-item">
+                <div class="skill-info">
+                  <div class="skill-name-wrapper">
+                    <i class='bx bxl-flutter'></i>
+                    <span class="skill-name">Flutter</span>
+                  </div>
+                  <span class="skill-percentage">75%</span>
+                </div>
+                <div class="skill-bar-wrapper">
+                  <div class="skill-bar-fill" style="width: 75%;"></div>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
+          </mat-card-content>
+        </mat-card>
 
         <!-- Backend -->
-        <div class="card skill-category animate-fade-up" style="animation-delay: 0.1s;">
-          <div class="category-header">
-            <div class="category-icon">
-              <i class='bx bx-server'></i>
-            </div>
-            <h3>Backend</h3>
-          </div>
-          <div class="skill-list">
-            <div class="skill-item">
-              <div class="skill-info">
-                <div class="skill-name-wrapper">
-                  <i class='bx bxl-java'></i>
-                  <span class="skill-name">Java / Spring Boot</span>
-                </div>
-                <span class="skill-percentage">90%</span>
+        <mat-card class="skill-category">
+          <mat-card-content>
+            <div class="category-header">
+              <div class="category-icon">
+                <mat-icon>dns</mat-icon>
               </div>
-              <div class="skill-bar"><div class="skill-progress" style="width: 90%;"></div></div>
+              <h3>Backend</h3>
             </div>
-            <div class="skill-item">
-              <div class="skill-info">
-                <div class="skill-name-wrapper">
-                  <i class='bx bxl-php'></i>
-                  <span class="skill-name">PHP / Laravel</span>
+            <div class="skill-list" @staggerSkills>
+              <div class="skill-anim-item">
+                <div class="skill-info">
+                  <div class="skill-name-wrapper">
+                    <i class='bx bxl-java'></i>
+                    <span class="skill-name">Java / Spring Boot</span>
+                  </div>
+                  <span class="skill-percentage">90%</span>
                 </div>
-                <span class="skill-percentage">85%</span>
-              </div>
-              <div class="skill-bar"><div class="skill-progress" style="width: 85%;"></div></div>
-            </div>
-            <div class="skill-item">
-              <div class="skill-info">
-                <div class="skill-name-wrapper">
-                  <i class='bx bxl-python'></i>
-                  <span class="skill-name">Python / Flask</span>
+                <div class="skill-bar-wrapper">
+                  <div class="skill-bar-fill" style="width: 90%;"></div>
                 </div>
-                <span class="skill-percentage">70%</span>
               </div>
-              <div class="skill-bar"><div class="skill-progress" style="width: 70%;"></div></div>
-            </div>
-            <div class="skill-item">
-              <div class="skill-info">
-                <div class="skill-name-wrapper">
-                  <i class='bx bxl-nodejs'></i>
-                  <span class="skill-name">Node.js</span>
+              <div class="skill-anim-item">
+                <div class="skill-info">
+                  <div class="skill-name-wrapper">
+                    <i class='bx bxl-php'></i>
+                    <span class="skill-name">PHP / Laravel</span>
+                  </div>
+                  <span class="skill-percentage">85%</span>
                 </div>
-                <span class="skill-percentage">65%</span>
+                <div class="skill-bar-wrapper">
+                  <div class="skill-bar-fill" style="width: 85%;"></div>
+                </div>
               </div>
-              <div class="skill-bar"><div class="skill-progress" style="width: 65%;"></div></div>
+              <div class="skill-anim-item">
+                <div class="skill-info">
+                  <div class="skill-name-wrapper">
+                    <i class='bx bxl-python'></i>
+                    <span class="skill-name">Python / Flask</span>
+                  </div>
+                  <span class="skill-percentage">70%</span>
+                </div>
+                <div class="skill-bar-wrapper">
+                  <div class="skill-bar-fill" style="width: 70%;"></div>
+                </div>
+              </div>
+              <div class="skill-anim-item">
+                <div class="skill-info">
+                  <div class="skill-name-wrapper">
+                    <i class='bx bxl-nodejs'></i>
+                    <span class="skill-name">Node.js</span>
+                  </div>
+                  <span class="skill-percentage">65%</span>
+                </div>
+                <div class="skill-bar-wrapper">
+                  <div class="skill-bar-fill" style="width: 65%;"></div>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
+          </mat-card-content>
+        </mat-card>
 
         <!-- Architecture & Data -->
-        <div class="card skill-category animate-fade-up" style="animation-delay: 0.2s;">
-          <div class="category-header">
-            <div class="category-icon">
-              <i class='bx bx-pyramid'></i>
-            </div>
-            <h3>Architecture & Data</h3>
-          </div>
-          <div class="skill-list">
-            <div class="skill-item">
-              <div class="skill-info">
-                <div class="skill-name-wrapper">
-                  <i class='bx bx-cube-alt'></i>
-                  <span class="skill-name">Monolithique / Microservices</span>
-                </div>
-                <span class="skill-percentage">90%</span>
+        <mat-card class="skill-category">
+          <mat-card-content>
+            <div class="category-header">
+              <div class="category-icon">
+                <mat-icon>account_tree</mat-icon>
               </div>
-              <div class="skill-bar"><div class="skill-progress" style="width: 90%;"></div></div>
+              <h3>Architecture & Data</h3>
             </div>
-            <div class="skill-item">
-              <div class="skill-info">
-                <div class="skill-name-wrapper">
-                  <i class='bx bx-data'></i>
-                  <span class="skill-name">MySQL / PostgreSQL</span>
+            <div class="skill-list" @staggerSkills>
+              <div class="skill-anim-item">
+                <div class="skill-info">
+                  <div class="skill-name-wrapper">
+                    <mat-icon class="skill-icon-sm">view_module</mat-icon>
+                    <span class="skill-name">Monolithique / Microservices</span>
+                  </div>
+                  <span class="skill-percentage">90%</span>
                 </div>
-                <span class="skill-percentage">95%</span>
-              </div>
-              <div class="skill-bar"><div class="skill-progress" style="width: 95%;"></div></div>
-            </div>
-            <div class="skill-item">
-              <div class="skill-info">
-                <div class="skill-name-wrapper">
-                  <i class='bx bx-lock-alt'></i>
-                  <span class="skill-name">APIs RESTful & Sécurité (JWT)</span>
+                <div class="skill-bar-wrapper">
+                  <div class="skill-bar-fill" style="width: 90%;"></div>
                 </div>
-                <span class="skill-percentage">90%</span>
               </div>
-              <div class="skill-bar"><div class="skill-progress" style="width: 90%;"></div></div>
-            </div>
-            <div class="skill-item">
-              <div class="skill-info">
-                <div class="skill-name-wrapper">
-                  <i class='bx bx-git-branch'></i>
-                  <span class="skill-name">Spring Data JPA & Hibernate</span>
+              <div class="skill-anim-item">
+                <div class="skill-info">
+                  <div class="skill-name-wrapper">
+                    <mat-icon class="skill-icon-sm">storage</mat-icon>
+                    <span class="skill-name">MySQL / PostgreSQL</span>
+                  </div>
+                  <span class="skill-percentage">95%</span>
                 </div>
-                <span class="skill-percentage">90%</span>
+                <div class="skill-bar-wrapper">
+                  <div class="skill-bar-fill" style="width: 95%;"></div>
+                </div>
               </div>
-              <div class="skill-bar"><div class="skill-progress" style="width: 90%;"></div></div>
+              <div class="skill-anim-item">
+                <div class="skill-info">
+                  <div class="skill-name-wrapper">
+                    <mat-icon class="skill-icon-sm">lock</mat-icon>
+                    <span class="skill-name">APIs RESTful & Sécurité (JWT)</span>
+                  </div>
+                  <span class="skill-percentage">90%</span>
+                </div>
+                <div class="skill-bar-wrapper">
+                  <div class="skill-bar-fill" style="width: 90%;"></div>
+                </div>
+              </div>
+              <div class="skill-anim-item">
+                <div class="skill-info">
+                  <div class="skill-name-wrapper">
+                    <mat-icon class="skill-icon-sm">hub</mat-icon>
+                    <span class="skill-name">Spring Data JPA & Hibernate</span>
+                  </div>
+                  <span class="skill-percentage">90%</span>
+                </div>
+                <div class="skill-bar-wrapper">
+                  <div class="skill-bar-fill" style="width: 90%;"></div>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
+          </mat-card-content>
+        </mat-card>
       </div>
     </div>
   </section>
 
   <!-- SERVICES -->
   <section id="services" class="services section bg-secondary-alt">
-    <div class="container">
-      <h2 class="heading-md">Mes <span class="text-gradient">Services</span></h2>
+    <div class="container" *ngIf="servicesVisible">
+      <h2 class="heading-md" @fadeInUp>Mes <span class="text-gradient">Services</span></h2>
       
-      <div class="services-grid stagger-container">
-        <div class="card service-card animate-fade-up">
-          <div class="service-icon-wrapper">
-            <i class='bx bx-code-alt'></i>
-          </div>
-          <h3>Développement Web</h3>
-          <p>Conception d'applications web modernes et performantes avec Angular, React ou Vue.js, optimisées pour tous les supports.</p>
-          <ul class="service-features">
-            <li><i class='bx bx-check'></i> Single Page Applications</li>
-            <li><i class='bx bx-check'></i> SEO Friendly</li>
-            <li><i class='bx bx-check'></i> UX/UI Moderne</li>
-          </ul>
-        </div>
+      <div class="services-grid" @staggerCards>
+        <mat-card class="service-card" matRipple>
+          <mat-card-content>
+            <div class="service-icon-wrapper">
+              <mat-icon>code</mat-icon>
+            </div>
+            <h3>Développement Web</h3>
+            <p>Conception d'applications web modernes et performantes avec Angular, optimisées pour tous les supports.</p>
+            <mat-divider></mat-divider>
+            <ul class="service-features">
+              <li><mat-icon class="check-icon">check_circle</mat-icon> Single Page Applications</li>
+              <li><mat-icon class="check-icon">check_circle</mat-icon> SEO Friendly</li>
+              <li><mat-icon class="check-icon">check_circle</mat-icon> UX/UI Moderne</li>
+            </ul>
+          </mat-card-content>
+        </mat-card>
 
-        <div class="card service-card animate-fade-up">
-          <div class="service-icon-wrapper">
-            <i class='bx bx-server'></i>
-          </div>
-          <h3>Architecture Backend</h3>
-          <p>Mise en place de systèmes robustes et scalables en Java/Spring Boot ou Laravel, maîtrisant les architectures monolithiques et microservices.</p>
-          <ul class="service-features">
-            <li><i class='bx bx-check'></i> APIs RESTful</li>
-            <li><i class='bx bx-check'></i> Microservices</li>
-            <li><i class='bx bx-check'></i> Sécurité & Auth (JWT/OAuth2)</li>
-          </ul>
-        </div>
+        <mat-card class="service-card" matRipple>
+          <mat-card-content>
+            <div class="service-icon-wrapper">
+              <mat-icon>dns</mat-icon>
+            </div>
+            <h3>Architecture Backend</h3>
+            <p>Mise en place de systèmes robustes et scalables en Java/Spring Boot ou Laravel, maîtrisant les architectures monolithiques et microservices.</p>
+            <mat-divider></mat-divider>
+            <ul class="service-features">
+              <li><mat-icon class="check-icon">check_circle</mat-icon> APIs RESTful</li>
+              <li><mat-icon class="check-icon">check_circle</mat-icon> Microservices</li>
+              <li><mat-icon class="check-icon">check_circle</mat-icon> Sécurité & Auth (JWT/OAuth2)</li>
+            </ul>
+          </mat-card-content>
+        </mat-card>
 
-        <div class="card service-card animate-fade-up">
-          <div class="service-icon-wrapper">
-            <i class='bx bx-mobile-alt'></i>
-          </div>
-          <h3>Applications Mobiles</h3>
-          <p>Développement d'applications mobiles cross-platform avec Flutter pour une expérience native sur iOS et Android.</p>
-          <ul class="service-features">
-            <li><i class='bx bx-check'></i> Multi-plateformes</li>
-            <li><i class='bx bx-check'></i> Performance Native</li>
-            <li><i class='bx bx-check'></i> Intégration APIs & Services REST</li>
-          </ul>
-        </div>
+        <mat-card class="service-card" matRipple>
+          <mat-card-content>
+            <div class="service-icon-wrapper">
+              <mat-icon>smartphone</mat-icon>
+            </div>
+            <h3>Applications Mobiles</h3>
+            <p>Développement d'applications mobiles cross-platform avec Flutter pour une expérience native sur iOS et Android.</p>
+            <mat-divider></mat-divider>
+            <ul class="service-features">
+              <li><mat-icon class="check-icon">check_circle</mat-icon> Multi-plateformes</li>
+              <li><mat-icon class="check-icon">check_circle</mat-icon> Performance Native</li>
+              <li><mat-icon class="check-icon">check_circle</mat-icon> Intégration APIs & Services REST</li>
+            </ul>
+          </mat-card-content>
+        </mat-card>
       </div>
     </div>
   </section>
 
   <!-- PROJECTS -->
   <section id="projects" class="projects section">
-    <div class="container">
-      <div class="section-header text-center animate-fade-up">
+    <div class="container" *ngIf="projectsVisible">
+      <div class="section-header text-center" @fadeInUp>
         <span class="badge section-badge">Portfolio de Réalisations</span>
         <h2 class="heading-md">Mes <span class="text-gradient">Projets Majeurs</span></h2>
         <p class="subtitle max-w-2xl mx-auto">
@@ -335,48 +400,40 @@
         </p>
       </div>
 
-      <!-- Filter Tabs -->
-      <div class="project-filters animate-fade-up">
-        <button 
-          class="filter-btn" 
-          [class.active]="activeFilter === 'all'" 
-          (click)="setFilter('all')">
-          <i class='bx bx-grid-alt'></i>
-          <span>Tous les projets</span>
-          <span class="filter-count">{{ projectCount.all }}</span>
-        </button>
-        <button 
-          class="filter-btn" 
-          [class.active]="activeFilter === 'web'" 
-          (click)="setFilter('web')">
-          <i class='bx bx-globe'></i>
-          <span>Web & Portails</span>
-          <span class="filter-count">{{ projectCount.web }}</span>
-        </button>
-        <button 
-          class="filter-btn" 
-          [class.active]="activeFilter === 'mobile'" 
-          (click)="setFilter('mobile')">
-          <i class='bx bx-mobile-alt'></i>
-          <span>Mobile & Flutter</span>
-          <span class="filter-count">{{ projectCount.mobile }}</span>
-        </button>
-        <button 
-          class="filter-btn" 
-          [class.active]="activeFilter === 'backend'" 
-          (click)="setFilter('backend')">
-          <i class='bx bx-server'></i>
-          <span>Backend & Microservices</span>
-          <span class="filter-count">{{ projectCount.backend }}</span>
-        </button>
+      <!-- Filter Toggles -->
+      <div class="project-filters" @fadeInUp>
+        <mat-button-toggle-group [value]="activeFilter" (change)="setFilter($event.value)" class="filter-toggle-group">
+          <mat-button-toggle value="all">
+            <mat-icon>grid_view</mat-icon>
+            <span class="filter-label">Tous</span>
+            <span class="filter-count">{{ projectCount.all }}</span>
+          </mat-button-toggle>
+          <mat-button-toggle value="web">
+            <mat-icon>language</mat-icon>
+            <span class="filter-label">Web & Portails</span>
+            <span class="filter-count">{{ projectCount.web }}</span>
+          </mat-button-toggle>
+          <mat-button-toggle value="mobile">
+            <mat-icon>smartphone</mat-icon>
+            <span class="filter-label">Mobile & Flutter</span>
+            <span class="filter-count">{{ projectCount.mobile }}</span>
+          </mat-button-toggle>
+          <mat-button-toggle value="backend">
+            <mat-icon>dns</mat-icon>
+            <span class="filter-label">Backend</span>
+            <span class="filter-count">{{ projectCount.backend }}</span>
+          </mat-button-toggle>
+        </mat-button-toggle-group>
       </div>
       
       <!-- Projects Grid -->
-      <div class="projects-grid">
-        <article 
+      <div class="projects-grid" @filterChange>
+        <mat-card 
           *ngFor="let project of filteredProjects; let i = index" 
-          class="card project-card"
-          [style.animation-delay]="(i * 0.05) + 's'">
+          class="project-card"
+          matRipple
+          [matRippleColor]="'rgba(99, 102, 241, 0.1)'"
+          (click)="openProjectModal(project)">
           
           <div class="project-card-header">
             <div class="project-icon-badge" [style.background]="project.colorGradient">
@@ -385,12 +442,12 @@
             <span class="project-category-pill">{{ project.categoryLabel }}</span>
           </div>
 
-          <div class="project-info">
+          <mat-card-content class="project-info">
             <h3 class="project-title">{{ project.title }}</h3>
             <span class="project-subtitle-text">{{ project.subtitle }}</span>
             <p class="project-desc">{{ project.shortDescription }}</p>
 
-            <div class="project-metrics" *ngIf="project.metrics && project.metrics.length">
+            <div class="project-metrics" *ngIf="project.metrics?.length">
               <div class="metric-chip" *ngFor="let m of project.metrics">
                 <span class="metric-val">{{ m.value }}</span>
                 <span class="metric-lbl">{{ m.label }}</span>
@@ -398,93 +455,36 @@
             </div>
 
             <div class="project-tags">
-              <span class="tag-badge" *ngFor="let tag of project.tags.slice(0, 4)">{{ tag }}</span>
-              <span class="tag-badge-more" *ngIf="project.tags.length > 4">+{{ project.tags.length - 4 }}</span>
+              <span *ngFor="let tag of project.tags.slice(0, 4)" class="tag-badge">{{ tag }}</span>
+              <span *ngIf="project.tags.length > 4" class="tag-badge-more">+{{ project.tags.length - 4 }}</span>
             </div>
 
+            <mat-divider></mat-divider>
+
             <div class="project-links">
-              <button class="btn-detail-action" (click)="openProjectModal(project)">
-                <i class='bx bx-info-circle'></i> Voir Détails
+              <button mat-flat-button class="btn-detail-action" (click)="openProjectModal(project); $event.stopPropagation()">
+                <mat-icon>info_outline</mat-icon> Voir Détails
               </button>
-              <a *ngIf="project.githubUrl" [href]="project.githubUrl" target="_blank" class="project-icon-btn" title="Code source GitHub" aria-label="GitHub">
-                <i class='bx bxl-github'></i>
+              <a *ngIf="project.githubUrl" [href]="project.githubUrl" target="_blank" mat-icon-button class="project-icon-btn" matTooltip="Code source GitHub" (click)="$event.stopPropagation()">
+                <i class='bx bxl-github' style="font-size: 1.35rem;"></i>
               </a>
-              <a *ngIf="project.liveUrl && project.liveUrl !== '#'" [href]="project.liveUrl" target="_blank" class="project-icon-btn" title="Voir la démo" aria-label="Démo">
-                <i class='bx bx-link-external'></i>
+              <a *ngIf="project.liveUrl && project.liveUrl !== '#'" [href]="project.liveUrl" target="_blank" mat-icon-button class="project-icon-btn" matTooltip="Voir la démo" (click)="$event.stopPropagation()">
+                <mat-icon>open_in_new</mat-icon>
               </a>
             </div>
-          </div>
-        </article>
+          </mat-card-content>
+        </mat-card>
       </div>
     </div>
   </section>
 
-  <!-- PROJECT DETAIL MODAL -->
-  <div class="modal-backdrop" *ngIf="selectedProject" (click)="closeProjectModal()">
-    <div class="modal-dialog card" (click)="$event.stopPropagation()">
-      <button class="modal-close" (click)="closeProjectModal()" aria-label="Fermer">
-        <i class='bx bx-x'></i>
-      </button>
-
-      <div class="modal-header-banner" [style.background]="selectedProject.colorGradient">
-        <div class="modal-banner-icon">
-          <i class='bx' [ngClass]="selectedProject.icon"></i>
-        </div>
-        <div class="modal-banner-text">
-          <span class="modal-category">{{ selectedProject.categoryLabel }}</span>
-          <h3 class="modal-title">{{ selectedProject.title }}</h3>
-          <p class="modal-subtitle">{{ selectedProject.subtitle }}</p>
-        </div>
-      </div>
-
-      <div class="modal-body">
-        <div class="modal-section">
-          <h4><i class='bx bx-align-left'></i> Présentation & Contexte</h4>
-          <p>{{ selectedProject.fullDescription }}</p>
-        </div>
-
-        <div class="modal-section" *ngIf="selectedProject.features && selectedProject.features.length">
-          <h4><i class='bx bx-check-shield'></i> Fonctionnalités Clés & Valeur Métier</h4>
-          <ul class="modal-feature-list">
-            <li *ngFor="let feat of selectedProject.features">
-              <i class='bx bxs-check-circle' [style.color]="selectedProject.accentColor"></i>
-              <span>{{ feat }}</span>
-            </li>
-          </ul>
-        </div>
-
-        <div class="modal-section" *ngIf="selectedProject.architecture">
-          <h4><i class='bx bx-layer'></i> Architecture & Stack Technique</h4>
-          <p class="arch-text">{{ selectedProject.architecture }}</p>
-          <div class="modal-tech-pills">
-            <span class="tag-badge-lg" *ngFor="let tag of selectedProject.tags">
-              {{ tag }}
-            </span>
-          </div>
-        </div>
-
-        <div class="modal-footer-actions">
-          <a *ngIf="selectedProject.githubUrl" [href]="selectedProject.githubUrl" target="_blank" class="btn btn-outline btn-sm">
-            <i class='bx bxl-github'></i> Dépôt GitHub
-          </a>
-          <a *ngIf="selectedProject.liveUrl && selectedProject.liveUrl !== '#'" [href]="selectedProject.liveUrl" target="_blank" class="btn btn-gradient btn-sm">
-            <i class='bx bx-link-external'></i> Accéder à la Démo
-          </a>
-          <button class="btn btn-primary btn-sm ml-auto" (click)="closeProjectModal()">
-            Fermer
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-
   <!-- CONTACT -->
   <section id="contact" class="contact section">
-    <div class="container">
-      <h2 class="heading-md">Parlons De <span class="text-gradient">Votre Projet</span></h2>
+    <div class="container" *ngIf="contactVisible">
+      <h2 class="heading-md" @fadeInUp>Parlons De <span class="text-gradient">Votre Projet</span></h2>
       
       <div class="contact-grid">
-        <div class="contact-info animate-fade-up">
+        <div class="contact-info" @slideInLeft>
           <h3 class="contact-title">Contactez-moi</h3>
           <p class="contact-desc">
             Vous avez un projet web, mobile ou microservices à concevoir ? Je suis disponible pour échanger sur vos besoins techniques et donner vie à vos idées.
@@ -492,14 +492,14 @@
           
           <div class="contact-list">
             <div class="contact-item">
-              <div class="contact-icon-box"><i class='bx bx-envelope'></i></div>
+              <div class="contact-icon-box"><mat-icon>email</mat-icon></div>
               <div class="contact-text">
                 <span>Email</span>
                 <p><a href="mailto:ndiaye.mor0409@gmail.com" class="contact-link">ndiaye.mor0409&#64;gmail.com</a></p>
               </div>
             </div>
             <div class="contact-item">
-              <div class="contact-icon-box"><i class='bx bx-map'></i></div>
+              <div class="contact-icon-box"><mat-icon>location_on</mat-icon></div>
               <div class="contact-text">
                 <span>Localisation</span>
                 <p>Dakar, Sénégal (Disponible en remote)</p>
@@ -508,30 +508,85 @@
           </div>
           
           <div class="social-links">
-            <a href="https://www.linkedin.com/in/mor-ndiaye-4251262aa/" target="_blank" class="social-link" title="LinkedIn" aria-label="LinkedIn"><i class='bx bxl-linkedin'></i></a>
-            <a href="https://github.com/morndiaye2007" target="_blank" class="social-link" title="GitHub" aria-label="GitHub"><i class='bx bxl-github'></i></a>
-            <a href="https://gitlab.com/morn5574" target="_blank" class="social-link" title="GitLab" aria-label="GitLab"><i class='bx bxl-gitlab'></i></a>
+            <a href="https://www.linkedin.com/in/mor-ndiaye-4251262aa/" target="_blank" mat-icon-button class="social-link" matTooltip="LinkedIn">
+              <i class='bx bxl-linkedin'></i>
+            </a>
+            <a href="https://github.com/morndiaye2007" target="_blank" mat-icon-button class="social-link" matTooltip="GitHub">
+              <i class='bx bxl-github'></i>
+            </a>
+            <a href="https://gitlab.com/morn5574" target="_blank" mat-icon-button class="social-link" matTooltip="GitLab">
+              <i class='bx bxl-gitlab'></i>
+            </a>
           </div>
         </div>
         
-        <div class="contact-form-container animate-fade-up" style="animation-delay: 0.1s;">
-          <form class="card contact-form" onsubmit="event.preventDefault(); alert('Merci pour votre message ! Je vous répondrai dans les plus brefs délais.');">
-            <div class="form-group">
-              <label for="name">Nom complet</label>
-              <input type="text" id="name" required placeholder="Votre nom" class="form-control">
+        <div class="contact-form-container" @slideInRight>
+          <div class="contact-form-card">
+            <div class="form-header">
+              <h3 class="form-title">Envoyez-moi un message</h3>
+              <p class="form-subtitle">Je réponds rapidement pour discuter de vos projets et opportunités.</p>
             </div>
-            <div class="form-group">
-              <label for="email">Adresse Email</label>
-              <input type="email" id="email" required placeholder="votre@email.com" class="form-control">
-            </div>
-            <div class="form-group">
-              <label for="message">Description du projet</label>
-              <textarea id="message" rows="5" required placeholder="Expliquez brièvement votre projet ou votre besoin..." class="form-control"></textarea>
-            </div>
-            <button type="submit" class="btn btn-gradient w-full">
-              <i class='bx bx-send'></i> Envoyer le Message
-            </button>
-          </form>
+            
+            <form (submit)="submitContactForm($event)" class="modern-contact-form">
+              <div class="custom-field-group">
+                <label for="contact-name" class="custom-field-label">
+                  Nom complet <span class="req-star">*</span>
+                </label>
+                <div class="custom-input-box">
+                  <mat-icon class="field-icon">person_outline</mat-icon>
+                  <input 
+                    type="text" 
+                    id="contact-name" 
+                    name="name" 
+                    required 
+                    placeholder="Ex: Amadou Diallo" 
+                    class="custom-text-input">
+                </div>
+              </div>
+
+              <div class="custom-field-group">
+                <label for="contact-email" class="custom-field-label">
+                  Adresse Email <span class="req-star">*</span>
+                </label>
+                <div class="custom-input-box">
+                  <mat-icon class="field-icon">mail_outline</mat-icon>
+                  <input 
+                    type="email" 
+                    id="contact-email" 
+                    name="email" 
+                    required 
+                    placeholder="Ex: amadou@example.com" 
+                    class="custom-text-input">
+                </div>
+              </div>
+
+              <div class="custom-field-group">
+                <label for="contact-message" class="custom-field-label">
+                  Description du projet <span class="req-star">*</span>
+                </label>
+                <div class="custom-input-box textarea-box">
+                  <mat-icon class="field-icon textarea-icon">chat_bubble_outline</mat-icon>
+                  <textarea 
+                    id="contact-message" 
+                    name="message" 
+                    rows="4" 
+                    required 
+                    placeholder="Parlez-moi de votre besoin, objectifs, calendrier ou technologies souhaitées..." 
+                    class="custom-text-input custom-textarea-input"></textarea>
+                </div>
+              </div>
+
+              <button mat-flat-button class="btn-submit-modern" type="submit">
+                <mat-icon>send</mat-icon>
+                <span>Envoyer le Message</span>
+              </button>
+
+              <div *ngIf="formSubmitted" class="form-success-banner">
+                <mat-icon class="success-icon">check_circle</mat-icon>
+                <span>Merci beaucoup ! Votre message a bien été envoyé.</span>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
     </div>
@@ -541,22 +596,84 @@
 <!-- FOOTER -->
 <footer class="footer">
   <div class="container footer-container">
-    <div class="footer-left">
-      <span class="logo-text">MN<span class="logo-dot">.</span></span>
-      <p>Développeur Full Stack passionné par la création de solutions technologiques innovantes.</p>
+    <div class="footer-grid">
+      <!-- Col 1: Brand & Bio -->
+      <div class="footer-col footer-col-brand">
+        <a href="#" class="logo">
+          <span class="logo-text">MN<span class="logo-dot">.</span></span>
+        </a>
+        <p class="footer-desc">
+          Développeur Full Stack & Mobile passionné par la conception de solutions logicielles scalables, ergonomiques et à fort impact.
+        </p>
+        <div class="footer-status-badge">
+          <span class="badge-dot"></span>
+          <span>Disponible pour nouveaux projets & CDI</span>
+        </div>
+      </div>
+
+      <!-- Col 2: Navigation rapide -->
+      <div class="footer-col">
+        <h4 class="footer-col-title">Navigation</h4>
+        <ul class="footer-nav-list">
+          <li><a href="#hero"><mat-icon>chevron_right</mat-icon> Accueil</a></li>
+          <li><a href="#about"><mat-icon>chevron_right</mat-icon> À propos</a></li>
+          <li><a href="#skills"><mat-icon>chevron_right</mat-icon> Compétences</a></li>
+          <li><a href="#services"><mat-icon>chevron_right</mat-icon> Services</a></li>
+          <li><a href="#projects"><mat-icon>chevron_right</mat-icon> Projets Réalisés</a></li>
+          <li><a href="#contact"><mat-icon>chevron_right</mat-icon> Me Contacter</a></li>
+        </ul>
+      </div>
+
+      <!-- Col 3: Stack Technique -->
+      <div class="footer-col">
+        <h4 class="footer-col-title">Expertise</h4>
+        <ul class="footer-nav-list">
+          <li><span class="footer-tech-item"><i class='bx bxl-spring-boot'></i> Java / Spring Boot</span></li>
+          <li><span class="footer-tech-item"><i class='bx bxl-angular'></i> Angular 17 & TypeScript</span></li>
+          <li><span class="footer-tech-item"><i class='bx bxl-flutter'></i> Flutter & Dart (Mobile)</span></li>
+          <li><span class="footer-tech-item"><i class='bx bxl-postgresql'></i> PostgreSQL & MySQL</span></li>
+          <li><span class="footer-tech-item"><i class='bx bx-lock-alt'></i> APIs REST & Sécurité JWT</span></li>
+        </ul>
+      </div>
+
+      <!-- Col 4: Contact & Réseaux -->
+      <div class="footer-col">
+        <h4 class="footer-col-title">Contact Direct</h4>
+        <div class="footer-contact-items">
+          <a href="mailto:ndiaye.mor0409@gmail.com" class="footer-contact-line">
+            <mat-icon>email</mat-icon>
+            <span>ndiaye.mor0409&#64;gmail.com</span>
+          </a>
+          <div class="footer-contact-line">
+            <mat-icon>location_on</mat-icon>
+            <span>Dakar, Sénégal (Disponible en remote)</span>
+          </div>
+        </div>
+
+        <div class="footer-social-row">
+          <a href="https://www.linkedin.com/in/mor-ndiaye-4251262aa/" target="_blank" class="footer-social-btn" title="LinkedIn" aria-label="LinkedIn">
+            <i class='bx bxl-linkedin'></i>
+          </a>
+          <a href="https://github.com/morndiaye2007" target="_blank" class="footer-social-btn" title="GitHub" aria-label="GitHub">
+            <i class='bx bxl-github'></i>
+          </a>
+          <a href="https://gitlab.com/morn5574" target="_blank" class="footer-social-btn" title="GitLab" aria-label="GitLab">
+            <i class='bx bxl-gitlab'></i>
+          </a>
+        </div>
+
+        <a href="assets/cv_mor_ndiaye.pdf" target="_blank" class="footer-download-btn">
+          <mat-icon>download</mat-icon>
+          <span>Télécharger mon CV</span>
+        </a>
+      </div>
     </div>
-    <div class="footer-bottom">
+
+    <mat-divider></mat-divider>
+
+    <div class="footer-bottom-bar">
       <p>&copy; 2026 Mor Ndiaye. Tous droits réservés.</p>
+      <p class="footer-credits">Conçu avec passion • Angular 17 & Material Design</p>
     </div>
   </div>
 </footer>
-
-<!-- BACK TO TOP BUTTON -->
-<button 
-  class="back-to-top" 
-  [class.visible]="showBackToTop" 
-  (click)="scrollToTop()" 
-  aria-label="Retour en haut de page"
-  title="Retour en haut">
-  <i class='bx bx-chevron-up'></i>
-</button>

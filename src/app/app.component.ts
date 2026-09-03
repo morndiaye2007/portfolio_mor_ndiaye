@@ -1,37 +1,189 @@
-import { Component, OnInit, HostListener } from '@angular/core';
+import { Component, OnInit, HostListener, AfterViewInit, ElementRef, QueryList, ViewChildren } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
-
-export interface Project {
-  id: string;
-  title: string;
-  subtitle: string;
-  category: 'web' | 'mobile' | 'backend' | 'fullstack';
-  categoryLabel: string;
-  shortDescription: string;
-  fullDescription: string;
-  icon: string;
-  colorGradient: string;
-  accentColor: string;
-  tags: string[];
-  features: string[];
-  architecture?: string;
-  githubUrl?: string;
-  liveUrl?: string;
-  metrics?: { label: string; value: string }[];
-}
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatCardModule } from '@angular/material/card';
+import { MatChipsModule } from '@angular/material/chips';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatButtonToggleModule } from '@angular/material/button-toggle';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatRippleModule } from '@angular/material/core';
+import { trigger, transition, style, animate, stagger, query, state, group, animateChild } from '@angular/animations';
+import { Project, ProjectDialogComponent } from './project-dialog.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet],
+  imports: [
+    CommonModule,
+    RouterOutlet,
+    MatToolbarModule,
+    MatButtonModule,
+    MatIconModule,
+    MatCardModule,
+    MatChipsModule,
+    MatProgressBarModule,
+    MatButtonToggleModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDividerModule,
+    MatDialogModule,
+    MatTooltipModule,
+    MatRippleModule
+  ],
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  animations: [
+    // Section fade in from bottom
+    trigger('fadeInUp', [
+      transition(':enter', [
+        style({ opacity: 0, transform: 'translateY(40px)' }),
+        animate('600ms cubic-bezier(0.35, 0, 0.25, 1)', style({ opacity: 1, transform: 'translateY(0)' }))
+      ])
+    ]),
+
+    // Slide in from left
+    trigger('slideInLeft', [
+      transition(':enter', [
+        style({ opacity: 0, transform: 'translateX(-60px)' }),
+        animate('600ms cubic-bezier(0.35, 0, 0.25, 1)', style({ opacity: 1, transform: 'translateX(0)' }))
+      ])
+    ]),
+
+    // Slide in from right
+    trigger('slideInRight', [
+      transition(':enter', [
+        style({ opacity: 0, transform: 'translateX(60px)' }),
+        animate('600ms cubic-bezier(0.35, 0, 0.25, 1)', style({ opacity: 1, transform: 'translateX(0)' }))
+      ])
+    ]),
+
+    // Scale up entrance
+    trigger('scaleIn', [
+      transition(':enter', [
+        style({ opacity: 0, transform: 'scale(0.85)' }),
+        animate('500ms cubic-bezier(0.35, 0, 0.25, 1)', style({ opacity: 1, transform: 'scale(1)' }))
+      ])
+    ]),
+
+    // Stagger children cards
+    trigger('staggerCards', [
+      transition('* => *', [
+        query(':enter', [
+          style({ opacity: 0, transform: 'translateY(30px)' }),
+          stagger(80, [
+            animate('500ms cubic-bezier(0.35, 0, 0.25, 1)', style({ opacity: 1, transform: 'translateY(0)' }))
+          ])
+        ], { optional: true })
+      ])
+    ]),
+
+    // Stagger skill items
+    trigger('staggerSkills', [
+      transition(':enter', [
+        query('.skill-anim-item', [
+          style({ opacity: 0, transform: 'translateX(-30px)' }),
+          stagger(100, [
+            animate('400ms cubic-bezier(0.35, 0, 0.25, 1)', style({ opacity: 1, transform: 'translateX(0)' }))
+          ])
+        ], { optional: true })
+      ])
+    ]),
+
+    // Stat counter pop
+    trigger('popIn', [
+      transition(':enter', [
+        style({ opacity: 0, transform: 'scale(0.5)' }),
+        animate('500ms 200ms cubic-bezier(0.34, 1.56, 0.64, 1)', style({ opacity: 1, transform: 'scale(1)' }))
+      ])
+    ]),
+
+    // Filter change animation
+    trigger('filterChange', [
+      transition('* => *', [
+        query(':enter', [
+          style({ opacity: 0, transform: 'scale(0.9) translateY(20px)' }),
+          stagger(60, [
+            animate('400ms cubic-bezier(0.35, 0, 0.25, 1)', style({ opacity: 1, transform: 'scale(1) translateY(0)' }))
+          ])
+        ], { optional: true })
+      ])
+    ]),
+
+    // Hero elements cascade
+    trigger('heroCascade', [
+      transition(':enter', [
+        query('.hero-anim', [
+          style({ opacity: 0, transform: 'translateY(30px)' }),
+          stagger(150, [
+            animate('600ms cubic-bezier(0.35, 0, 0.25, 1)', style({ opacity: 1, transform: 'translateY(0)' }))
+          ])
+        ], { optional: true })
+      ])
+    ]),
+
+    // Dynamic About Tab content transition
+    trigger('aboutTabChange', [
+      transition('* => *', [
+        style({ opacity: 0, transform: 'translateY(12px)' }),
+        animate('350ms cubic-bezier(0.35, 0, 0.25, 1)', style({ opacity: 1, transform: 'translateY(0)' }))
+      ])
+    ])
+  ]
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, AfterViewInit {
   isMenuOpen = false;
   activeFilter: string = 'all';
-  selectedProject: Project | null = null;
+
+  // Interactive About section tab
+  selectedAboutTab: 'backend' | 'frontend' = 'backend';
+
+  aboutContent = {
+    backend: {
+      badge: 'Expertise Backend & Microservices',
+      title: 'Architectures Microservices & Systèmes Robustes',
+      paragraphs: [
+        `Ingénieur backend spécialisé en <strong>Java & Spring Boot</strong>, je conçois des architectures microservices modulaires et sécurisées (<strong>OAuth2, JWT</strong>), avec streaming d'événements <strong>Apache Kafka</strong> et bases de données relationnelles (<strong>PostgreSQL, MySQL</strong>).`,
+        `J'ai notamment développé le socle backend du <strong>Portail Don de Sang</strong> (gestion de flux critiques en temps réel) et l'ERP de gestion pharmaceutique <strong>PharmaGest</strong> avec des APIs RESTful hautement optimisées.`
+      ],
+      stats: [
+        { num: '3+', label: "Années d'Expérience" },
+        { num: '10+', label: 'APIs & Microservices' },
+        { num: '100%', label: 'Disponibilité & Sécurité' }
+      ]
+    },
+    frontend: {
+      badge: 'Expertise Frontend & Mobile',
+      title: 'Interfaces Web Réactives & Applications Multiplateformes',
+      paragraphs: [
+        `Développeur d'expériences numériques sous <strong>Angular 17+</strong> (Angular Material, animations soignées) et d'applications mobiles cross-platform réactives et fluides avec <strong>Flutter</strong> (iOS & Android).`,
+        `J'ai réalisé l'application mobile <strong>Smart Poulailler</strong> (monitoring avicole complet), la marketplace agricole <strong>AgriConnect</strong> et la solution mobile de prévisions en temps réel <strong>MétéoLive</strong>.`
+      ],
+      stats: [
+        { num: 'iOS & Android', label: 'Support Multiplateforme' },
+        { num: '60 FPS', label: 'Fluidité & Performance' },
+        { num: '100%', label: 'Responsive Design' }
+      ]
+    }
+  };
+
+  selectAboutTab(tab: 'backend' | 'frontend') {
+    this.selectedAboutTab = tab;
+  }
+
+  // Visibility flags for scroll-triggered animations
+  heroVisible = false;
+  aboutVisible = false;
+  skillsVisible = false;
+  servicesVisible = false;
+  projectsVisible = false;
+  contactVisible = false;
 
   projects: Project[] = [
     {
@@ -205,23 +357,17 @@ export class AppComponent implements OnInit {
     }
   ];
 
+  constructor(private dialog: MatDialog) {}
+
   get filteredProjects(): Project[] {
-    if (this.activeFilter === 'all') {
-      return this.projects;
-    }
-    if (this.activeFilter === 'web') {
-      return this.projects.filter(p => p.category === 'web' || p.category === 'fullstack');
-    }
-    if (this.activeFilter === 'mobile') {
-      return this.projects.filter(p => p.category === 'mobile' || p.category === 'fullstack');
-    }
-    if (this.activeFilter === 'backend') {
-      return this.projects.filter(p => p.category === 'backend' || p.category === 'fullstack');
-    }
+    if (this.activeFilter === 'all') return this.projects;
+    if (this.activeFilter === 'web') return this.projects.filter(p => p.category === 'web' || p.category === 'fullstack');
+    if (this.activeFilter === 'mobile') return this.projects.filter(p => p.category === 'mobile' || p.category === 'fullstack');
+    if (this.activeFilter === 'backend') return this.projects.filter(p => p.category === 'backend' || p.category === 'fullstack');
     return this.projects.filter(p => p.category === this.activeFilter);
   }
 
-  get projectCount(): { all: number; web: number; mobile: number; backend: number } {
+  get projectCount() {
     return {
       all: this.projects.length,
       web: this.projects.filter(p => p.category === 'web' || p.category === 'fullstack').length,
@@ -234,32 +380,31 @@ export class AppComponent implements OnInit {
     this.activeFilter = filter;
   }
 
+  formSubmitted = false;
+
+  submitContactForm(event: Event) {
+    event.preventDefault();
+    this.formSubmitted = true;
+    setTimeout(() => {
+      this.formSubmitted = false;
+    }, 6000);
+  }
+
   openProjectModal(project: Project) {
-    this.selectedProject = project;
-    document.body.style.overflow = 'hidden';
+    this.dialog.open(ProjectDialogComponent, {
+      data: project,
+      width: '680px',
+      maxWidth: '92vw',
+      maxHeight: '88vh',
+      panelClass: 'project-dialog-panel',
+      autoFocus: false,
+      restoreFocus: false
+    });
   }
-
-  closeProjectModal() {
-    this.selectedProject = null;
-    document.body.style.overflow = 'auto';
-  }
-
-  @HostListener('window:keydown', ['$event'])
-  handleKeyDown(event: KeyboardEvent) {
-    if (event.key === 'Escape' && this.selectedProject) {
-      this.closeProjectModal();
-    }
-  }
-
-  showBackToTop = false;
 
   @HostListener('window:scroll', [])
   onWindowScroll() {
-    this.showBackToTop = window.scrollY > 400;
-  }
-
-  scrollToTop() {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    this.checkSectionVisibility();
   }
 
   toggleMenu() {
@@ -271,25 +416,33 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.initScrollAnimations();
+    this.heroVisible = true;
   }
 
-  private initScrollAnimations() {
-    const observerOptions = {
-      threshold: 0.1,
-      rootMargin: '0px 0px -50px 0px'
-    };
+  ngAfterViewInit() {
+    setTimeout(() => this.checkSectionVisibility(), 300);
+  }
 
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
+  private checkSectionVisibility() {
+    const windowHeight = window.innerHeight;
+    const offset = windowHeight * 0.82;
+
+    const sections = [
+      { id: 'about', flag: 'aboutVisible' },
+      { id: 'skills', flag: 'skillsVisible' },
+      { id: 'services', flag: 'servicesVisible' },
+      { id: 'projects', flag: 'projectsVisible' },
+      { id: 'contact', flag: 'contactVisible' }
+    ];
+
+    sections.forEach(section => {
+      const el = document.getElementById(section.id);
+      if (el) {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < offset) {
+          (this as any)[section.flag] = true;
         }
-      });
-    }, observerOptions);
-
-    const animatedElements = document.querySelectorAll('.animate-fade-up');
-    animatedElements.forEach(el => observer.observe(el));
+      }
+    });
   }
 }
-
