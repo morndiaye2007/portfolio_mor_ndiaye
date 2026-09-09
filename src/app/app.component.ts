@@ -155,8 +155,8 @@ export class AppComponent implements OnInit, AfterViewInit {
         `J'ai notamment développé le socle backend du <strong>Portail Don de Sang</strong> (gestion de flux critiques en temps réel) et l'ERP de gestion pharmaceutique <strong>PharmaGest</strong> avec des APIs RESTful hautement optimisées.`
       ],
       stats: [
-        { num: '3+', label: "Années d'Expérience" },
-        { num: '10+', label: 'APIs & Microservices' },
+        { num: '2+', label: "Années d'Expérience" },
+        { num: '5+', label: 'APIs & Microservices' },
         { num: '100%', label: 'Disponibilité & Sécurité' }
       ]
     },
