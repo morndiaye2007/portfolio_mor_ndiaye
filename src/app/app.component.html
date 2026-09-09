@@ -158,7 +158,7 @@
             <span class="cursus-level">Enseignement Secondaire</span>
             <h4 class="cursus-degree-title">Baccalauréat</h4>
             <p class="cursus-degree-desc">
-              Diplôme d'accès à l'enseignement supérieur, marquant l'entrée dans le cursus académique scientifique et informatique.
+              Diplôme d'accès à l'enseignement supérieur, marquant l'entrée dans le cursus académique scientifique.
             </p>
           </div>
 
@@ -467,8 +467,7 @@
         </p>
       </div>
 
-      <!-- Filter Toggles (Commentés à la demande) -->
-      <!--
+      <!-- Filter Toggles -->
       <div class="project-filters" @fadeInUp>
         <mat-button-toggle-group [value]="activeFilter" (change)="setFilter($event.value)" class="filter-toggle-group">
           <mat-button-toggle value="all">
@@ -493,8 +492,7 @@
           </mat-button-toggle>
         </mat-button-toggle-group>
       </div>
-      -->
-      
+
       <!-- Projects Grid -->
       <div class="projects-grid" @filterChange>
         <mat-card 
@@ -510,7 +508,7 @@
             </div>
             <span 
               class="project-category-pill" 
-              [ngClass]="project.category === 'mobile' ? 'pill-cyan' : (project.category === 'backend' ? 'pill-violet' : 'pill-indigo')">
+              [ngClass]="project.category === 'mobile' ? 'pill-cyan' : (project.category === 'web' ? 'pill-indigo' : 'pill-violet')">
               {{ project.categoryLabel }}
             </span>
           </div>

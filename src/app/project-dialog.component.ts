@@ -22,6 +22,7 @@ export interface Project {
   architecture?: string;
   githubUrl?: string;
   liveUrl?: string;
+  repos?: { label: string; url: string }[];
   metrics?: { label: string; value: string }[];
 }
 
@@ -120,10 +121,18 @@ export interface Project {
 
       <!-- Action Footer -->
       <div class="dialog-footer-actions">
-        <a *ngIf="data.githubUrl" [href]="data.githubUrl" target="_blank" class="btn-action-outline">
-          <i [class]="data.githubUrl.includes('gitlab.com') ? 'bx bxl-gitlab' : 'bx bxl-github'" style="font-size: 1.25rem;"></i>
-          <span>{{ data.githubUrl.includes('gitlab.com') ? 'Dépôt GitLab' : 'Dépôt GitHub' }}</span>
-        </a>
+        <ng-container *ngIf="data.repos?.length; else singleRepo">
+          <a *ngFor="let repo of data.repos" [href]="repo.url" target="_blank" class="btn-action-outline">
+            <i [class]="repo.url.includes('gitlab.com') ? 'bx bxl-gitlab' : 'bx bxl-github'" style="font-size: 1.25rem;"></i>
+            <span>{{ repo.label }}</span>
+          </a>
+        </ng-container>
+        <ng-template #singleRepo>
+          <a *ngIf="data.githubUrl" [href]="data.githubUrl" target="_blank" class="btn-action-outline">
+            <i [class]="data.githubUrl.includes('gitlab.com') ? 'bx bxl-gitlab' : 'bx bxl-github'" style="font-size: 1.25rem;"></i>
+            <span>{{ data.githubUrl.includes('gitlab.com') ? 'Dépôt GitLab' : 'Dépôt GitHub' }}</span>
+          </a>
+        </ng-template>
         <a *ngIf="data.liveUrl && data.liveUrl !== '#'" [href]="data.liveUrl" target="_blank" class="btn-action-gradient">
           <mat-icon style="font-size: 1.15rem; width: 1.15rem; height: 1.15rem;">open_in_new</mat-icon> Accéder à la Démo
         </a>

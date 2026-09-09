@@ -68,8 +68,8 @@
   
   /* Shadows */
   --shadow-card: 0 8px 30px rgba(0, 0, 0, 0.3), 0 0 0 1px var(--border-color);
-  --shadow-card-hover: 0 20px 45px rgba(0, 0, 0, 0.45), 0 0 35px rgba(59, 130, 246, 0.35);
-  --shadow-glow: 0 0 25px rgba(59, 130, 246, 0.45);
+  --shadow-card-hover: 0 16px 40px rgba(0, 0, 0, 0.4), 0 0 18px rgba(59, 130, 246, 0.18);
+  --shadow-glow: 0 0 16px rgba(59, 130, 246, 0.25);
 }
 
 * {
@@ -165,44 +165,44 @@ h1, h2, h3, h4, h5, h6 {
   100% { background-position: 0% 50%; }
 }
 
-/* Badges Dédiés par Couleur - VIVANTS & LUMINEUX */
+/* Badges Dédiés par Couleur - Sobres & Professionnels */
 .badge-indigo {
-  background: rgba(59, 130, 246, 0.2) !important;
-  border: 1.5px solid rgba(59, 130, 246, 0.55) !important;
+  background: rgba(59, 130, 246, 0.16) !important;
+  border: 1.5px solid rgba(59, 130, 246, 0.45) !important;
   color: #BFDBFE !important;
-  box-shadow: 0 0 16px rgba(59, 130, 246, 0.28) !important;
+  box-shadow: none !important;
 }
 .badge-indigo:hover {
-  background: rgba(59, 130, 246, 0.35) !important;
+  background: rgba(59, 130, 246, 0.26) !important;
   border-color: #60A5FA !important;
   color: #FFFFFF !important;
-  box-shadow: 0 0 25px rgba(59, 130, 246, 0.6) !important;
+  box-shadow: 0 0 12px rgba(59, 130, 246, 0.3) !important;
 }
 
 .badge-cyan {
-  background: rgba(0, 210, 255, 0.2) !important;
-  border: 1.5px solid rgba(0, 210, 255, 0.55) !important;
+  background: rgba(0, 210, 255, 0.16) !important;
+  border: 1.5px solid rgba(0, 210, 255, 0.45) !important;
   color: #A5F3FC !important;
-  box-shadow: 0 0 16px rgba(0, 210, 255, 0.28) !important;
+  box-shadow: none !important;
 }
 .badge-cyan:hover {
-  background: rgba(0, 210, 255, 0.35) !important;
+  background: rgba(0, 210, 255, 0.26) !important;
   border-color: #00D2FF !important;
   color: #FFFFFF !important;
-  box-shadow: 0 0 25px rgba(0, 210, 255, 0.6) !important;
+  box-shadow: 0 0 12px rgba(0, 210, 255, 0.3) !important;
 }
 
 .badge-violet {
-  background: rgba(217, 70, 239, 0.2) !important;
-  border: 1.5px solid rgba(217, 70, 239, 0.55) !important;
+  background: rgba(217, 70, 239, 0.16) !important;
+  border: 1.5px solid rgba(217, 70, 239, 0.45) !important;
   color: #FBCFE8 !important;
-  box-shadow: 0 0 16px rgba(217, 70, 239, 0.28) !important;
+  box-shadow: none !important;
 }
 .badge-violet:hover {
-  background: rgba(217, 70, 239, 0.35) !important;
+  background: rgba(217, 70, 239, 0.26) !important;
   border-color: #D946EF !important;
   color: #FFFFFF !important;
-  box-shadow: 0 0 25px rgba(217, 70, 239, 0.6) !important;
+  box-shadow: 0 0 12px rgba(217, 70, 239, 0.3) !important;
 }
 
 .subtitle {

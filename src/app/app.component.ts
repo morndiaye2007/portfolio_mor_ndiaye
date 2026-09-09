@@ -189,86 +189,36 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   projects: Project[] = [
     {
-      id: 'don-sang-portail',
-      title: 'Don de Sang - Portail',
-      subtitle: 'Système Centralisé de Gestion des Banques de Sang & Hôpitaux',
-      category: 'web',
-      categoryLabel: 'Portail Web & Backend',
-      shortDescription: 'Portail web administratif et médical permettant la gestion en temps réel des stocks de sang, la planification des collectes et le suivi des dons.',
-      fullDescription: 'Une solution web complète conçue pour les centres de transfusion sanguine et les hôpitaux. Elle offre un tableau de bord en temps réel pour anticiper les pénuries de poches de sang, gérer les rendez-vous des donneurs, automatiser les alertes d\'urgence et sécuriser la traçabilité des poches de la collecte à la transfusion.',
-      icon: 'bx-plus-medical',
-      colorGradient: 'linear-gradient(135deg, #EF4444 0%, #B91C1C 100%)',
-      accentColor: '#EF4444',
-      tags: ['Angular 17', 'Spring Boot', 'PostgreSQL', 'JWT Security', 'Tailwind CSS', 'REST API'],
+      id: 'don-sang',
+      title: 'Don de Sang',
+      subtitle: 'Écosystème Complet : Portail Hôpitaux, Plateforme Citoyenne & App Mobile',
+      category: 'fullstack',
+      categoryLabel: 'Écosystème Web & Mobile',
+      shortDescription: 'Écosystème complet de gestion des dons de sang : portail administratif temps réel pour hôpitaux, plateforme citoyenne web et application mobile Flutter avec alertes d\'urgence géolocalisées.',
+      fullDescription: 'Une solution complète conçue pour fluidifier toute la chaîne du don de sang. Le portail d\'administration offre aux centres de transfusion et hôpitaux un tableau de bord temps réel pour anticiper les pénuries et sécuriser la traçabilité des poches. La plateforme citoyenne web permet aux volontaires de tester leur éligibilité et de prendre rendez-vous. L\'application mobile Flutter géolocalise les centres de collecte et envoie des notifications push d\'urgence ciblées par groupe sanguin.',
+      icon: 'bx-donate-blood',
+      colorGradient: 'linear-gradient(135deg, #8B5CF6 0%, #6D28D9 100%)',
+      accentColor: '#8B5CF6',
+      tags: ['Angular 17', 'Spring Boot', 'PostgreSQL', 'JWT Security', 'Flutter', 'Dart', 'Google Maps API', 'Push Notifications', 'REST API'],
       features: [
-        'Tableau de bord en temps réel des stocks par groupe sanguin (A, B, AB, O +/-)',
-        'Gestion administrative des centres de collecte et des hôpitaux partenaires',
-        'Module de planification et publication des campagnes de dons mobiles',
-        'Système d\'alerte automatique en cas de seuil critique ou urgence vitale',
-        'Gestion des dossiers donneurs et historique médical confidentiel'
+        'Tableau de bord temps réel des stocks par groupe sanguin (A, B, AB, O +/-) pour hôpitaux et centres de collecte',
+        'Espace citoyen : prise de rendez-vous en ligne, test d\'éligibilité et localisation des collectes fixes et mobiles',
+        'Application mobile avec géolocalisation des centres et carnet de don digitalisé',
+        'Notifications push d\'urgence ciblées par groupe sanguin et rayon kilométrique',
+        'Système d\'alerte automatique en cas de seuil critique ou pénurie vitale',
+        'Gestion sécurisée des dossiers donneurs (OAuth2/JWT) et traçabilité des poches de la collecte à la transfusion'
       ],
-      architecture: 'Architecture découplée avec frontend Angular 17 réactif et backend robuste Spring Boot sécurisé avec Spring Security et JWT.',
+      architecture: 'Écosystème composé de trois briques connectées à une API REST Spring Boot commune sécurisée par JWT : un portail d\'administration Angular 17 pour les hôpitaux, une plateforme web citoyenne, et une application mobile Flutter (architecture BLoC) pour les donneurs, le tout appuyé sur PostgreSQL.',
       githubUrl: 'https://gitlab.com/ndiaye_tech/sene-sang-portail',
       liveUrl: '#',
+      repos: [
+        { label: 'Portail Hôpitaux (GitLab)', url: 'https://gitlab.com/ndiaye_tech/sene-sang-portail' },
+        { label: 'Web Citoyen & Mobile (GitLab)', url: 'https://gitlab.com/ndiaye_tech/sene-sang' }
+      ],
       metrics: [
         { label: 'Gestion', value: 'Temps réel' },
         { label: 'Sécurité', value: 'OAuth2 / JWT' },
-        { label: 'Plateforme', value: 'GitLab' }
-      ]
-    },
-    {
-      id: 'don-sang-web',
-      title: 'Don de Sang - Web',
-      subtitle: 'Plateforme Citoyenne Web & Mobilisation des Donneurs',
-      category: 'web',
-      categoryLabel: 'Application Web',
-      shortDescription: 'Plateforme web citoyenne permettant la sensibilisation, l\'inscription des donneurs, la prise de rendez-vous en ligne et les appels d\'urgence.',
-      fullDescription: 'Portail web public interactif facilitant l\'engagement citoyen pour le don de sang. Il permet aux volontaires de localiser les collectes, de réserver un créneau de don, de tester leur éligibilité et de répondre rapidement aux appels d\'urgence vitale.',
-      icon: 'bx-donate-blood',
-      colorGradient: 'linear-gradient(135deg, #E11D48 0%, #BE123C 100%)',
-      accentColor: '#E11D48',
-      tags: ['Angular', 'Spring Boot', 'Tailwind CSS', 'REST API', 'PostgreSQL'],
-      features: [
-        'Espace citoyen et prise de rendez-vous pour les collectes fixes et mobiles',
-        'Questionnaire préalable d\'éligibilité au don en ligne',
-        'Affichage dynamique des besoins urgents par région',
-        'Suivi des campagnes de sensibilisation et actualités'
-      ],
-      architecture: 'Frontend web Angular communicant avec une API REST Spring Boot performante et sécurisée.',
-      githubUrl: 'https://gitlab.com/ndiaye_tech/sene-sang',
-      liveUrl: '#',
-      metrics: [
-        { label: 'Rendez-vous', value: 'En ligne' },
-        { label: 'Disponibilité', value: '24/7' },
-        { label: 'Plateforme', value: 'GitLab' }
-      ]
-    },
-    {
-      id: 'don-sang-mobile',
-      title: 'Don de Sang - App Mobile',
-      subtitle: 'Application Citoyenne pour Donneurs & Alertes d\'Urgence',
-      category: 'mobile',
-      categoryLabel: 'Application Mobile',
-      shortDescription: 'Application mobile Flutter intuitive pour géolocaliser les centres de collecte, recevoir des notifications d\'urgence vitale et suivre son carnet de don.',
-      fullDescription: 'Application mobile dédiée aux citoyens et donneurs de sang réguliers ou occasionnels. Elle facilite l\'acte de donner en géolocalisant les centres les plus proches, en envoyant des notifications push ciblées lors d\'appels d\'urgence correspondant au groupe sanguin du donneur et en fournissant un carnet de santé digitalisé.',
-      icon: 'bx-mobile-vibration',
-      colorGradient: 'linear-gradient(135deg, #F43F5E 0%, #E11D48 100%)',
-      accentColor: '#F43F5E',
-      tags: ['Flutter', 'Dart', 'Google Maps API', 'Push Notifications', 'SQLite', 'REST API'],
-      features: [
-        'Carte interactive avec géolocalisation des centres fixes et collectes mobiles',
-        'Prise de rendez-vous en ligne avec rappel automatique par notification',
-        'Notifications push d\'urgence filtrées par groupe sanguin et rayon kilométrique',
-        'Carnet numérique du donneur avec historique des dons et date du prochain don éligible',
-        'Quiz d\'auto-évaluation d\'éligibilité au don avant déplacement'
-      ],
-      architecture: 'Application mobile multiplateforme développée sous Flutter avec architecture BLoC, notifications push et consommation d\'APIs REST.',
-      githubUrl: 'https://gitlab.com/ndiaye_tech/sene-sang',
-      liveUrl: '#',
-      metrics: [
-        { label: 'Plateformes', value: 'Android & iOS' },
-        { label: 'Temps Réponse', value: '< 200ms' },
-        { label: 'Plateforme', value: 'GitLab' }
+        { label: 'Plateformes', value: 'Web & Mobile' }
       ]
     },
     {
@@ -280,8 +230,8 @@ export class AppComponent implements OnInit, AfterViewInit {
       shortDescription: 'Plateforme innovante reliant directement les agriculteurs aux acheteurs, avec suivi des récoltes, cours du marché et conseils agrométéorologiques.',
       fullDescription: 'AgriConnect est une solution technologique à fort impact socio-économique conçue pour valoriser la production agricole locale. Elle offre aux producteurs un espace de vente directe sans intermédiaires abusifs, un suivi en temps réel du cours des denrées sur les marchés régionaux et des prévisions agro-climatiques pour optimiser les périodes de semis et de récolte.',
       icon: 'bx-leaf',
-      colorGradient: 'linear-gradient(135deg, #10B981 0%, #047857 100%)',
-      accentColor: '#10B981',
+      colorGradient: 'linear-gradient(135deg, #A855F7 0%, #7E22CE 100%)',
+      accentColor: '#A855F7',
       tags: ['Angular', 'Spring Boot', 'Flutter', 'MySQL', 'OpenWeather API', 'Chart.js'],
       features: [
         'Marketplace B2B/B2C pour la commercialisation directe des récoltes',
@@ -308,8 +258,8 @@ export class AppComponent implements OnInit, AfterViewInit {
       shortDescription: 'Logiciel robuste de gestion officinale : contrôle des stocks avec alertes péremption, délivrance d\'ordonnances, caisse et suivi fournisseurs.',
       fullDescription: 'PharmaGest est une solution de gestion pharmaceutique conçue pour fiabiliser et fluidifier le travail quotidien des pharmaciens. Le système assure un contrôle rigoureux des entrées/sorties de stocks, déclenche des alertes intelligentes sur les dates de péremption et ruptures imminentes, gère la facturation multi-paiements et édite des rapports statistiques complets de rentabilité.',
       icon: 'bx-capsule',
-      colorGradient: 'linear-gradient(135deg, #06B6D4 0%, #0E7490 100%)',
-      accentColor: '#06B6D4',
+      colorGradient: 'linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%)',
+      accentColor: '#3B82F6',
       tags: ['Spring Boot', 'Angular', 'PostgreSQL', 'JasperReports', 'Spring Security', 'REST API'],
       features: [
         'Gestion avancée des stocks avec suivi des lots, dosages et dates limites d\'utilisation',
@@ -337,8 +287,8 @@ export class AppComponent implements OnInit, AfterViewInit {
       shortDescription: 'Application mobile intuitive pour la gestion et le pilotage d\'élevages avicoles : suivi des bandes, ponte, alimentation, dépenses et rentabilité.',
       fullDescription: 'Smart Poulailler est une application mobile développée sous Flutter conçue pour digitaliser et simplifier le pilotage quotidien des élevages de volailles directement sur smartphone. Elle permet aux éleveurs de suivre avec précision chaque bande de volailles (poussins, poulets de chair, pondeuses), d\'enregistrer les consommations d\'aliments et soins, de surveiller les courbes de ponte et de mortalité, et de calculer automatiquement la rentabilité financière de chaque lot.',
       icon: 'bx-mobile-alt',
-      colorGradient: 'linear-gradient(135deg, #F59E0B 0%, #D97706 100%)',
-      accentColor: '#F59E0B',
+      colorGradient: 'linear-gradient(135deg, #00D2FF 0%, #0284C7 100%)',
+      accentColor: '#00D2FF',
       tags: ['Flutter', 'Dart', 'Spring Boot', 'PostgreSQL', 'REST API', 'Charts / Graphiques'],
       features: [
         'Suivi mobile complet des bandes avicoles (âge, effectifs, taux de ponte, mortalité)',
@@ -365,8 +315,8 @@ export class AppComponent implements OnInit, AfterViewInit {
       shortDescription: 'Application mobile élégante proposant des prévisions météorologiques ultra précises, animations climatiques dynamiques et radar interactif.',
       fullDescription: 'Application mobile météo alliant esthétique épurée et précision météorologique. Elle exploite l\'API OpenWeather pour restituer en temps réel les données climatiques (température ressentie, humidité, vent, indice UV, prévisions heure par heure et à 7 jours) accompagnées d\'animations visuelles immersives.',
       icon: 'bx-cloud-lightning',
-      colorGradient: 'linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%)',
-      accentColor: '#3B82F6',
+      colorGradient: 'linear-gradient(135deg, #22D3EE 0%, #0E7490 100%)',
+      accentColor: '#22D3EE',
       tags: ['Flutter', 'Dart', 'OpenWeather API', 'Lottie Animations', 'Geolocator'],
       features: [
         'Détection automatique de la position géographique avec mise à jour météo instantanée',
