@@ -1,65 +1,156 @@
-<!-- HEADER / TOOLBAR -->
-<mat-toolbar class="header-toolbar">
-  <div class="container header-container">
-    <a href="#" class="logo">
-      <span class="logo-text">MN<span class="logo-dot">.</span></span>
-    </a>
-    
-    <nav class="nav-links" [class.active]="isMenuOpen">
-      <a href="#hero" (click)="closeMenu()">Accueil</a>
-      <a href="#about" (click)="closeMenu()">À propos</a>
-      <a href="#skills" (click)="closeMenu()">Compétences</a>
-      <a href="#services" (click)="closeMenu()">Services</a>
-      <a href="#projects" (click)="closeMenu()">Projets</a>
-      <a href="#contact" (click)="closeMenu()">Contact</a>
-      <a href="assets/cv_mor_ndiaye.pdf" target="_blank" mat-flat-button class="cv-btn" (click)="closeMenu()">
-        <mat-icon>download</mat-icon> CV
-      </a>
-    </nav>
-
-    <button mat-icon-button class="menu-toggle" (click)="toggleMenu()" aria-label="Toggle Menu">
-      <mat-icon>{{ isMenuOpen ? 'close' : 'menu' }}</mat-icon>
-    </button>
+<!-- BACKGROUND CODE WATERMARK (Subtle Developer Ambiance) -->
+<div class="code-watermark-overlay" aria-hidden="true">
+  <div class="watermark-snippet watermark-left">
+    <span>&#64;Injectable(&#123; providedIn: 'root' &#125;)</span>
+    <span>export class ArchitectureService &#123;</span>
+    <span>  readonly stack = ['Spring Boot', 'Angular 17', 'Flutter'];</span>
+    <span>  readonly databases = ['PostgreSQL', 'MySQL', 'Redis'];</span>
+    <span>  readonly security = ['OAuth2', 'JWT', 'Spring Security'];</span>
+    <span>&#125;</span>
   </div>
-</mat-toolbar>
+  <div class="watermark-snippet watermark-right">
+    <span>&#64;Component(&#123; selector: 'app-root' &#125;)</span>
+    <span>export class PortfolioComponent &#123;</span>
+    <span>  developer = 'Mor Ndiaye';</span>
+    <span>  role = 'Full Stack &amp; Mobile Engineer';</span>
+    <span>  location = 'Dakar, Sénégal (Remote OK)';</span>
+    <span>&#125;</span>
+  </div>
+</div>
 
-<main>
-  <!-- HERO -->
+<!-- HEADER / TOOLBAR (Floating Glass Capsule Navbar) -->
+<header class="dribbble-navbar-wrapper">
+  <mat-toolbar class="header-toolbar">
+    <div class="container header-container">
+      <a href="#hero" class="logo">
+        <span class="logo-code code-font">&lt;C/&gt;</span>
+        <span class="logo-text">Mor Ndiaye</span>
+      </a>
+      
+      <nav class="nav-links" [class.active]="isMenuOpen">
+        <a href="#hero" (click)="closeMenu()" class="nav-link-item">
+          <span class="nav-code-tag code-font">&lt;</span>Accueil<span class="nav-code-tag code-font">/&gt;</span>
+        </a>
+        <a href="#about" (click)="closeMenu()" class="nav-link-item">À propos</a>
+        <a href="#skills" (click)="closeMenu()" class="nav-link-item">Compétences</a>
+        <a href="#services" (click)="closeMenu()" class="nav-link-item">Services</a>
+        <a href="#projects" (click)="closeMenu()" class="nav-link-item">Projets</a>
+        <a href="#contact" (click)="closeMenu()" class="nav-link-item">Contact</a>
+      </nav>
+
+      <div class="header-actions">
+        <div class="header-socials">
+          <a href="https://www.linkedin.com/in/mor-ndiaye-4251262aa/" target="_blank" rel="noopener" class="header-social-btn" title="LinkedIn" aria-label="LinkedIn">
+            <i class='bx bxl-linkedin'></i>
+          </a>
+          <a href="https://github.com/morndiaye2007" target="_blank" rel="noopener" class="header-social-btn" title="GitHub" aria-label="GitHub">
+            <i class='bx bxl-github'></i>
+          </a>
+          <a href="mailto:ndiaye.mor0409@gmail.com" class="header-social-btn" title="Email Direct" aria-label="Email Direct">
+            <mat-icon class="social-mat-icon">mail_outline</mat-icon>
+          </a>
+        </div>
+
+        <button class="theme-toggle-btn" (click)="toggleTheme()" [matTooltip]="isDarkMode ? 'Passer au mode clair' : 'Passer au mode sombre'" aria-label="Changer le thème">
+          <mat-icon>{{ isDarkMode ? 'light_mode' : 'dark_mode' }}</mat-icon>
+        </button>
+
+        <a href="assets/cv_mor_ndiaye.pdf" target="_blank" class="cv-btn-dribbble">
+          <mat-icon>file_download</mat-icon> <span>CV</span>
+        </a>
+
+        <button mat-icon-button class="menu-toggle" (click)="toggleMenu()" aria-label="Toggle Menu">
+          <mat-icon>{{ isMenuOpen ? 'close' : 'menu' }}</mat-icon>
+        </button>
+      </div>
+    </div>
+  </mat-toolbar>
+</header>
+
+<main class="dribbble-main-wrapper">
+  <!-- HERO SECTION (Ergonomic Above-the-Fold Layout) -->
   <section id="hero" class="hero section" *ngIf="heroVisible" @heroCascade>
     <div class="container hero-container">
       <div class="hero-content">
-        <span class="badge badge-indigo hero-badge hero-anim">
-          <span class="badge-dot"></span>
-          Disponible pour missions & nouveaux projets
-        </span>
-        <h1 class="heading-lg hero-anim">
-          Développeur <span class="text-gradient-indigo">Full Stack & Mobile</span>
+        <div class="hero-top-meta hero-anim">
+          <div class="hero-status-pill">
+            <span class="badge-dot"></span>
+            <span>Disponible pour nouvelles missions &amp; opportunités</span>
+          </div>
+          <span class="code-tag-dim code-font">&lt;developer&gt;</span>
+        </div>
+
+        <h1 class="hero-hello hero-anim">
+          Hello, je suis <span class="text-neon-cyan">Mor Ndiaye</span>
         </h1>
-        <p class="subtitle hero-subtitle hero-anim">
-          Je conçois et déploie des applications web, mobiles et architectures microservices performantes (Spring Boot, Angular, Flutter), avec une solide expertise en solutions de santé, agritech et gestion d'entreprise.
+
+        <h2 class="hero-title hero-anim">
+          <span class="text-gradient-cyan">Développeur Full Stack &amp; Mobile</span>
+        </h2>
+
+        <p class="hero-subtitle hero-anim">
+          Je conçois et déploie des applications web, mobiles et architectures microservices performantes (<strong>Spring Boot</strong>, <strong>Angular 17</strong>, <strong>Flutter</strong>), avec une solide expertise en solutions de santé, agritech et gestion d'entreprise.
         </p>
+
         <div class="hero-btns hero-anim">
-          <a href="#projects" mat-flat-button class="btn-hero-primary">
-            <mat-icon>folder_open</mat-icon> Découvrir mes projets
+          <a href="assets/cv_mor_ndiaye.pdf" target="_blank" class="btn-dribbble-primary">
+            <mat-icon>download</mat-icon>
+            <span>Consulter mon CV</span>
           </a>
-          <a href="#contact" mat-stroked-button class="btn-hero-outline">
-            <mat-icon>send</mat-icon> Me contacter
+          <a href="#contact" class="btn-dribbble-secondary">
+            <mat-icon>calendar_today</mat-icon>
+            <span>Prendre RDV</span>
+          </a>
+          <a href="#projects" class="btn-dribbble-ghost">
+            <span>Voir mes projets</span>
+            <mat-icon>arrow_forward</mat-icon>
           </a>
         </div>
-        
-        <div class="hero-tech-stack hero-anim">
-          <span class="tech-pill tech-pill-indigo"><i class='bx bxl-spring-boot'></i> Spring Boot</span>
-          <span class="tech-pill tech-pill-cyan"><i class='bx bxl-angular'></i> Angular</span>
-          <span class="tech-pill tech-pill-cyan"><i class='bx bxl-flutter'></i> Flutter</span>
-          <span class="tech-pill tech-pill-indigo"><i class='bx bxl-postgresql'></i> PostgreSQL</span>
-          <span class="tech-pill tech-pill-violet"><i class='bx bxl-php'></i> Laravel</span>
+
+        <div class="hero-quick-highlights hero-anim">
+          <div class="quick-highlight-item">
+            <mat-icon>verified</mat-icon>
+            <span>Master 1 Génie Logiciel</span>
+          </div>
+          <div class="quick-highlight-divider"></div>
+          <div class="quick-highlight-item">
+            <mat-icon>bolt</mat-icon>
+            <span>5+ Projets Full Stack &amp; Mobile</span>
+          </div>
+          <div class="quick-highlight-divider"></div>
+          <div class="quick-highlight-item">
+            <mat-icon>public</mat-icon>
+            <span>Dakar &amp; Remote</span>
+          </div>
         </div>
       </div>
       
+      <!-- HERO VISUAL WITH FLOATING TECH BADGES -->
       <div class="hero-visual hero-anim">
-        <div class="hero-blob"></div>
-        <div class="hero-image-container">
-          <img src="assets/profile.jpeg" alt="Mor Ndiaye" class="hero-img">
+        <div class="hero-backdrop-glow"></div>
+        <div class="hero-avatar-frame">
+          <img src="assets/profile.jpeg" alt="Mor Ndiaye - Développeur Full Stack & Mobile" class="hero-avatar-img">
+        </div>
+
+        <!-- Orbiting Floating Tech Badges -->
+        <div class="floating-tech-badge badge-angular" title="Angular 17">
+          <div class="tech-badge-icon icon-angular"><i class='bx bxl-angular'></i></div>
+        </div>
+
+        <div class="floating-tech-badge badge-spring" title="Spring Boot & Java">
+          <div class="tech-badge-icon icon-spring"><i class='bx bxl-spring-boot'></i></div>
+        </div>
+
+        <div class="floating-tech-badge badge-flutter" title="Flutter & Dart">
+          <div class="tech-badge-icon icon-flutter"><i class='bx bxl-flutter'></i></div>
+        </div>
+
+        <div class="floating-tech-badge badge-js" title="TypeScript & JavaScript">
+          <div class="tech-badge-icon icon-js"><i class='bx bxl-typescript'></i></div>
+        </div>
+
+        <div class="floating-tech-badge badge-postgres" title="PostgreSQL & Database">
+          <div class="tech-badge-icon icon-postgres"><i class='bx bxl-postgresql'></i></div>
         </div>
       </div>
     </div>
@@ -71,6 +162,9 @@
       <div class="section-header text-center" @fadeInUp>
         <span class="badge badge-cyan section-badge">Mon Parcours</span>
         <h2 class="heading-md">À Propos De <span class="text-gradient-cyan">Moi</span></h2>
+        <p class="subtitle max-w-2xl mx-auto">
+          Une double compétence Backend et Frontend/Mobile pour bâtir des solutions logicielles de bout en bout.
+        </p>
       </div>
       
       <div class="about-grid">
@@ -90,7 +184,7 @@
                   Actif
                 </span>
               </div>
-              <h3>Backend & Architecture Microservices</h3>
+              <h3>Backend &amp; Architecture Microservices</h3>
               <p>Conception d'APIs RESTful sécurisées, streaming d'événements (Kafka) et modélisation de bases relationnelles (PostgreSQL/MySQL).</p>
             </mat-card-content>
           </mat-card>
@@ -110,21 +204,23 @@
                   Actif
                 </span>
               </div>
-              <h3>Frontend & Mobile Multiplateforme</h3>
-              <p>Développement d'interfaces web réactives sous Angular et d'applications mobiles fluides avec Flutter (iOS & Android).</p>
+              <h3>Frontend &amp; Mobile Multiplateforme</h3>
+              <p>Développement d'interfaces web réactives sous Angular et d'applications mobiles fluides avec Flutter (iOS &amp; Android).</p>
             </mat-card-content>
           </mat-card>
         </div>
 
         <div class="about-text" [@aboutTabChange]="selectedAboutTab">
-          <div class="about-focus-badge" [ngClass]="selectedAboutTab === 'backend' ? 'focus-badge-indigo' : 'focus-badge-cyan'">
-            <mat-icon class="focus-icon">tune</mat-icon>
-            <span>{{ aboutContent[selectedAboutTab].badge }}</span>
+          <div class="about-focus-top">
+            <div class="about-focus-badge" [ngClass]="selectedAboutTab === 'backend' ? 'focus-badge-indigo' : 'focus-badge-cyan'">
+              <mat-icon class="focus-icon">tune</mat-icon>
+              <span>{{ aboutContent[selectedAboutTab].badge }}</span>
+            </div>
+
+            <h3 class="about-focus-title">{{ aboutContent[selectedAboutTab].title }}</h3>
+
+            <p *ngFor="let para of aboutContent[selectedAboutTab].paragraphs" [innerHTML]="para"></p>
           </div>
-
-          <h3 class="about-focus-title">{{ aboutContent[selectedAboutTab].title }}</h3>
-
-          <p *ngFor="let para of aboutContent[selectedAboutTab].paragraphs" [innerHTML]="para"></p>
           
           <div class="about-stats">
             <div class="stat-item" *ngFor="let st of aboutContent[selectedAboutTab].stats">
@@ -141,14 +237,14 @@
           <span class="cursus-line"></span>
           <div class="cursus-header-pill">
             <mat-icon>school</mat-icon>
-            <span>Cursus & Formation Académique</span>
+            <span>Cursus &amp; Formation Académique</span>
           </div>
           <span class="cursus-line"></span>
         </div>
 
-        <div class="cursus-grid">
+        <div class="cursus-grid" @staggerCards>
           <!-- 1. Baccalauréat -->
-          <div class="cursus-card cursus-card-violet">
+          <div class="cursus-card cursus-card-violet" @fadeInUp>
             <div class="cursus-card-top">
               <span class="cursus-step-badge badge-violet">Obtenu</span>
               <div class="cursus-icon-box icon-box-violet">
@@ -163,7 +259,7 @@
           </div>
 
           <!-- 2. Licence 3 Génie Logiciel -->
-          <div class="cursus-card cursus-card-indigo">
+          <div class="cursus-card cursus-card-indigo" @fadeInUp>
             <div class="cursus-card-top">
               <span class="cursus-step-badge badge-indigo">Diplômé (Bac+3)</span>
               <div class="cursus-icon-box icon-box-indigo">
@@ -173,12 +269,12 @@
             <span class="cursus-level">Cycle Licence</span>
             <h4 class="cursus-degree-title">Licence 3 — Génie Logiciel</h4>
             <p class="cursus-degree-desc">
-              Fondations de l'ingénierie logicielle : algorithmique avancée, modélisation UML, bases de données relationnelles et développement fullstack web & mobile.
+              Fondations de l'ingénierie logicielle : algorithmique avancée, modélisation UML, bases de données relationnelles et développement fullstack web &amp; mobile.
             </p>
           </div>
 
           <!-- 3. Actuellement M1 Génie Logiciel -->
-          <div class="cursus-card cursus-card-cyan cursus-card-active">
+          <div class="cursus-card cursus-card-cyan cursus-card-active" @fadeInUp>
             <div class="cursus-card-top">
               <span class="cursus-step-badge badge-cyan pulse-badge">
                 <span class="live-pulse-dot"></span> Actuellement (M1)
@@ -204,6 +300,9 @@
       <div class="section-header text-center" @fadeInUp>
         <span class="badge badge-indigo section-badge">Expertise Technique</span>
         <h2 class="heading-md">Mes <span class="text-gradient-indigo">Compétences</span></h2>
+        <p class="subtitle max-w-2xl mx-auto">
+          Maîtrise des technologies modernes pour concevoir des architectures fiables, scalables et maintenables.
+        </p>
       </div>
       
       <div class="skills-grid" @staggerCards>
@@ -214,7 +313,7 @@
               <div class="category-icon">
                 <mat-icon>desktop_windows</mat-icon>
               </div>
-              <h3>Frontend & Mobile</h3>
+              <h3>Frontend &amp; Mobile</h3>
             </div>
             <div class="skill-list" @staggerSkills>
               <div class="skill-anim-item">
@@ -276,7 +375,7 @@
               <div class="category-icon">
                 <mat-icon>dns</mat-icon>
               </div>
-              <h3>Backend & Microservices</h3>
+              <h3>Backend &amp; Microservices</h3>
             </div>
             <div class="skill-list" @staggerSkills>
               <div class="skill-anim-item">
@@ -338,7 +437,7 @@
               <div class="category-icon">
                 <mat-icon>account_tree</mat-icon>
               </div>
-              <h3>Architecture & Données</h3>
+              <h3>Architecture &amp; Données</h3>
             </div>
             <div class="skill-list" @staggerSkills>
               <div class="skill-anim-item">
@@ -369,7 +468,7 @@
                 <div class="skill-info">
                   <div class="skill-name-wrapper">
                     <mat-icon class="skill-icon-sm">lock</mat-icon>
-                    <span class="skill-name">APIs RESTful & Sécurité (JWT)</span>
+                    <span class="skill-name">APIs RESTful &amp; Sécurité (JWT)</span>
                   </div>
                   <span class="skill-percentage">90%</span>
                 </div>
@@ -381,7 +480,7 @@
                 <div class="skill-info">
                   <div class="skill-name-wrapper">
                     <mat-icon class="skill-icon-sm">hub</mat-icon>
-                    <span class="skill-name">Spring Data JPA & Hibernate</span>
+                    <span class="skill-name">Spring Data JPA &amp; Hibernate</span>
                   </div>
                   <span class="skill-percentage">90%</span>
                 </div>
@@ -402,6 +501,9 @@
       <div class="section-header text-center" @fadeInUp>
         <span class="badge badge-violet section-badge">Offre de Services</span>
         <h2 class="heading-md">Mes <span class="text-gradient-violet">Services</span></h2>
+        <p class="subtitle max-w-2xl mx-auto">
+          Des prestations sur mesure, de la conception d'architecture au déploiement en production.
+        </p>
       </div>
       
       <div class="services-grid" @staggerCards>
@@ -415,8 +517,8 @@
             <mat-divider></mat-divider>
             <ul class="service-features">
               <li><mat-icon class="check-icon check-indigo">check_circle</mat-icon> Single Page Applications</li>
-              <li><mat-icon class="check-icon check-indigo">check_circle</mat-icon> SEO Friendly</li>
-              <li><mat-icon class="check-icon check-indigo">check_circle</mat-icon> UX/UI Moderne</li>
+              <li><mat-icon class="check-icon check-indigo">check_circle</mat-icon> SEO Friendly &amp; Accessible</li>
+              <li><mat-icon class="check-icon check-indigo">check_circle</mat-icon> UX/UI Moderne &amp; Ergonomique</li>
             </ul>
           </mat-card-content>
         </mat-card>
@@ -430,9 +532,9 @@
             <p>Mise en place de systèmes robustes et scalables en Java/Spring Boot ou Laravel, maîtrisant les architectures monolithiques et microservices.</p>
             <mat-divider></mat-divider>
             <ul class="service-features">
-              <li><mat-icon class="check-icon check-cyan">check_circle</mat-icon> APIs RESTful</li>
-              <li><mat-icon class="check-icon check-cyan">check_circle</mat-icon> Microservices</li>
-              <li><mat-icon class="check-icon check-cyan">check_circle</mat-icon> Sécurité & Auth (JWT/OAuth2)</li>
+              <li><mat-icon class="check-icon check-cyan">check_circle</mat-icon> APIs RESTful Haute Performance</li>
+              <li><mat-icon class="check-icon check-cyan">check_circle</mat-icon> Architectures Microservices</li>
+              <li><mat-icon class="check-icon check-cyan">check_circle</mat-icon> Sécurité &amp; Auth (JWT/OAuth2)</li>
             </ul>
           </mat-card-content>
         </mat-card>
@@ -446,9 +548,9 @@
             <p>Développement d'applications mobiles cross-platform avec Flutter pour une expérience native sur iOS et Android.</p>
             <mat-divider></mat-divider>
             <ul class="service-features">
-              <li><mat-icon class="check-icon check-violet">check_circle</mat-icon> Multi-plateformes</li>
-              <li><mat-icon class="check-icon check-violet">check_circle</mat-icon> Performance Native</li>
-              <li><mat-icon class="check-icon check-violet">check_circle</mat-icon> Intégration APIs & Services REST</li>
+              <li><mat-icon class="check-icon check-violet">check_circle</mat-icon> iOS &amp; Android Cross-Platform</li>
+              <li><mat-icon class="check-icon check-violet">check_circle</mat-icon> Fluidité &amp; Performance Native</li>
+              <li><mat-icon class="check-icon check-violet">check_circle</mat-icon> Intégration APIs &amp; Temps Réel</li>
             </ul>
           </mat-card-content>
         </mat-card>
@@ -477,12 +579,12 @@
           </mat-button-toggle>
           <mat-button-toggle value="web">
             <mat-icon>language</mat-icon>
-            <span class="filter-label">Web & Portails</span>
+            <span class="filter-label">Web &amp; Portails</span>
             <span class="filter-count">{{ projectCount.web }}</span>
           </mat-button-toggle>
           <mat-button-toggle value="mobile">
             <mat-icon>smartphone</mat-icon>
-            <span class="filter-label">Mobile & Flutter</span>
+            <span class="filter-label">Mobile &amp; Flutter</span>
             <span class="filter-count">{{ projectCount.mobile }}</span>
           </mat-button-toggle>
           <mat-button-toggle value="backend">
@@ -499,7 +601,7 @@
           *ngFor="let project of filteredProjects; let i = index" 
           class="project-card"
           matRipple
-          [matRippleColor]="'rgba(99, 102, 241, 0.1)'"
+          [matRippleColor]="'rgba(59, 130, 246, 0.08)'"
           (click)="openProjectModal(project)">
           
           <div class="project-card-header">
@@ -536,10 +638,10 @@
               <button mat-flat-button class="btn-detail-action" (click)="openProjectModal(project); $event.stopPropagation()">
                 <mat-icon>info_outline</mat-icon> Voir Détails
               </button>
-              <a *ngIf="project.githubUrl" [href]="project.githubUrl" target="_blank" mat-icon-button class="project-icon-btn" [matTooltip]="project.githubUrl.includes('gitlab.com') ? 'Dépôt GitLab' : 'Dépôt GitHub'" (click)="$event.stopPropagation()">
+              <a *ngIf="project.githubUrl" [href]="project.githubUrl" target="_blank" rel="noopener" mat-icon-button class="project-icon-btn" [matTooltip]="project.githubUrl.includes('gitlab.com') ? 'Dépôt GitLab' : 'Dépôt GitHub'" (click)="$event.stopPropagation()">
                 <i [class]="project.githubUrl.includes('gitlab.com') ? 'bx bxl-gitlab gitlab-icon' : 'bx bxl-github github-icon'" style="font-size: 1.35rem;"></i>
               </a>
-              <a *ngIf="project.liveUrl && project.liveUrl !== '#'" [href]="project.liveUrl" target="_blank" mat-icon-button class="project-icon-btn" matTooltip="Voir la démo" (click)="$event.stopPropagation()">
+              <a *ngIf="project.liveUrl && project.liveUrl !== '#'" [href]="project.liveUrl" target="_blank" rel="noopener" mat-icon-button class="project-icon-btn" matTooltip="Voir la démo" (click)="$event.stopPropagation()">
                 <mat-icon>open_in_new</mat-icon>
               </a>
             </div>
@@ -555,42 +657,50 @@
       <div class="section-header text-center" @fadeInUp>
         <span class="badge badge-violet section-badge">Collaboration</span>
         <h2 class="heading-md">Parlons De <span class="text-gradient-violet">Votre Projet</span></h2>
+        <p class="subtitle max-w-2xl mx-auto">
+          Un besoin d'architecture, de développement web ou d'application mobile ? Échangeons sur vos objectifs.
+        </p>
       </div>
       
       <div class="contact-grid">
         <div class="contact-info" @slideInLeft>
-          <h3 class="contact-title">Contactez-moi</h3>
-          <p class="contact-desc">
-            Vous avez un projet web, mobile ou microservices à concevoir ? Je suis disponible pour échanger sur vos besoins techniques et donner vie à vos idées.
-          </p>
-          
-          <div class="contact-list">
-            <div class="contact-item">
-              <div class="contact-icon-box contact-box-indigo"><mat-icon>email</mat-icon></div>
-              <div class="contact-text">
-                <span>Email</span>
-                <p><a href="mailto:ndiaye.mor0409@gmail.com" class="contact-link">ndiaye.mor0409&#64;gmail.com</a></p>
+          <div class="contact-info-card">
+            <h3 class="contact-title">Contactez-moi</h3>
+            <p class="contact-desc">
+              Vous avez un projet web, mobile ou microservices à concevoir ? Je suis disponible pour échanger sur vos besoins techniques et donner vie à vos idées.
+            </p>
+            
+            <div class="contact-list">
+              <div class="contact-item">
+                <div class="contact-icon-box contact-box-indigo"><mat-icon>email</mat-icon></div>
+                <div class="contact-text">
+                  <span>Email Direct</span>
+                  <p><a href="mailto:ndiaye.mor0409@gmail.com" class="contact-link">ndiaye.mor0409&#64;gmail.com</a></p>
+                </div>
+              </div>
+              <div class="contact-item">
+                <div class="contact-icon-box contact-box-cyan"><mat-icon>location_on</mat-icon></div>
+                <div class="contact-text">
+                  <span>Localisation</span>
+                  <p>Dakar, Sénégal (Disponible en remote)</p>
+                </div>
               </div>
             </div>
-            <div class="contact-item">
-              <div class="contact-icon-box contact-box-cyan"><mat-icon>location_on</mat-icon></div>
-              <div class="contact-text">
-                <span>Localisation</span>
-                <p>Dakar, Sénégal (Disponible en remote)</p>
+            
+            <div class="contact-social-section">
+              <span class="contact-social-label">Réseaux Professionnels &amp; Code</span>
+              <div class="social-links">
+                <a href="https://www.linkedin.com/in/mor-ndiaye-4251262aa/" target="_blank" rel="noopener" mat-icon-button class="social-link" matTooltip="LinkedIn">
+                  <i class='bx bxl-linkedin'></i>
+                </a>
+                <a href="https://github.com/morndiaye2007" target="_blank" rel="noopener" mat-icon-button class="social-link" matTooltip="GitHub">
+                  <i class='bx bxl-github'></i>
+                </a>
+                <a href="https://gitlab.com/morn5574" target="_blank" rel="noopener" mat-icon-button class="social-link" matTooltip="GitLab">
+                  <i class='bx bxl-gitlab'></i>
+                </a>
               </div>
             </div>
-          </div>
-          
-          <div class="social-links">
-            <a href="https://www.linkedin.com/in/mor-ndiaye-4251262aa/" target="_blank" mat-icon-button class="social-link" matTooltip="LinkedIn">
-              <i class='bx bxl-linkedin'></i>
-            </a>
-            <a href="https://github.com/morndiaye2007" target="_blank" mat-icon-button class="social-link" matTooltip="GitHub">
-              <i class='bx bxl-github'></i>
-            </a>
-            <a href="https://gitlab.com/morn5574" target="_blank" mat-icon-button class="social-link" matTooltip="GitLab">
-              <i class='bx bxl-gitlab'></i>
-            </a>
           </div>
         </div>
         
@@ -692,15 +802,16 @@
     <div class="footer-grid">
       <!-- Col 1: Brand & Bio -->
       <div class="footer-col footer-col-brand">
-        <a href="#" class="logo">
-          <span class="logo-text">MN<span class="logo-dot">.</span></span>
+        <a href="#hero" class="logo">
+          <span class="logo-code code-font">&lt;C/&gt;</span>
+          <span class="logo-text">Mor Ndiaye</span>
         </a>
         <p class="footer-desc">
-          Développeur Full Stack & Mobile passionné par la conception de solutions logicielles scalables, ergonomiques et à fort impact.
+          Développeur Full Stack &amp; Mobile passionné par la conception de solutions logicielles scalables, ergonomiques et à fort impact.
         </p>
         <div class="footer-status-badge">
           <span class="badge-dot"></span>
-          <span>Disponible pour nouveaux projets & CDI</span>
+          <span>Disponible pour nouveaux projets &amp; CDI</span>
         </div>
       </div>
 
@@ -722,10 +833,10 @@
         <h4 class="footer-col-title">Expertise</h4>
         <ul class="footer-nav-list">
           <li><span class="footer-tech-item"><i class='bx bxl-spring-boot'></i> Java / Spring Boot</span></li>
-          <li><span class="footer-tech-item"><i class='bx bxl-angular'></i> Angular 17 & TypeScript</span></li>
-          <li><span class="footer-tech-item"><i class='bx bxl-flutter'></i> Flutter & Dart (Mobile)</span></li>
-          <li><span class="footer-tech-item"><i class='bx bxl-postgresql'></i> PostgreSQL & MySQL</span></li>
-          <li><span class="footer-tech-item"><i class='bx bx-lock-alt'></i> APIs REST & Sécurité JWT</span></li>
+          <li><span class="footer-tech-item"><i class='bx bxl-angular'></i> Angular 17 &amp; TypeScript</span></li>
+          <li><span class="footer-tech-item"><i class='bx bxl-flutter'></i> Flutter &amp; Dart (Mobile)</span></li>
+          <li><span class="footer-tech-item"><i class='bx bxl-postgresql'></i> PostgreSQL &amp; MySQL</span></li>
+          <li><span class="footer-tech-item"><i class='bx bx-lock-alt'></i> APIs REST &amp; Sécurité JWT</span></li>
         </ul>
       </div>
 
@@ -744,13 +855,13 @@
         </div>
 
         <div class="footer-social-row">
-          <a href="https://www.linkedin.com/in/mor-ndiaye-4251262aa/" target="_blank" class="footer-social-btn" title="LinkedIn" aria-label="LinkedIn">
+          <a href="https://www.linkedin.com/in/mor-ndiaye-4251262aa/" target="_blank" rel="noopener" class="footer-social-btn" title="LinkedIn" aria-label="LinkedIn">
             <i class='bx bxl-linkedin'></i>
           </a>
-          <a href="https://github.com/morndiaye2007" target="_blank" class="footer-social-btn" title="GitHub" aria-label="GitHub">
+          <a href="https://github.com/morndiaye2007" target="_blank" rel="noopener" class="footer-social-btn" title="GitHub" aria-label="GitHub">
             <i class='bx bxl-github'></i>
           </a>
-          <a href="https://gitlab.com/morn5574" target="_blank" class="footer-social-btn" title="GitLab" aria-label="GitLab">
+          <a href="https://gitlab.com/morn5574" target="_blank" rel="noopener" class="footer-social-btn" title="GitLab" aria-label="GitLab">
             <i class='bx bxl-gitlab'></i>
           </a>
         </div>
@@ -766,7 +877,7 @@
 
     <div class="footer-bottom-bar">
       <p>&copy; 2026 Mor Ndiaye. Tous droits réservés.</p>
-      <p class="footer-credits">Conçu avec passion • Angular 17 & Material Design</p>
+      <p class="footer-credits">Conçu avec passion • Angular 17 &amp; Material Design</p>
     </div>
   </div>
 </footer>

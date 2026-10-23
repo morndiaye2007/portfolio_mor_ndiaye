@@ -141,7 +141,21 @@ import { Project, ProjectDialogComponent } from './project-dialog.component';
 })
 export class AppComponent implements OnInit, AfterViewInit {
   isMenuOpen = false;
+  isDarkMode = true;
   activeFilter: string = 'all';
+
+  toggleTheme() {
+    this.isDarkMode = !this.isDarkMode;
+    if (this.isDarkMode) {
+      document.documentElement.classList.remove('light');
+      document.documentElement.classList.add('dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.documentElement.classList.remove('dark');
+      document.documentElement.classList.add('light');
+      localStorage.setItem('theme', 'light');
+    }
+  }
 
   // Interactive About section tab
   selectedAboutTab: 'backend' | 'frontend' = 'backend';
@@ -444,15 +458,64 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.heroVisible = true;
+    this.aboutVisible = false;
+    this.skillsVisible = false;
+    this.servicesVisible = false;
+    this.projectsVisible = false;
+    this.contactVisible = false;
+
+    if (typeof window !== 'undefined') {
+      const savedTheme = localStorage.getItem('theme');
+      if (savedTheme === 'light') {
+        this.isDarkMode = false;
+        document.documentElement.classList.remove('dark');
+        document.documentElement.classList.add('light');
+      } else {
+        this.isDarkMode = true;
+        document.documentElement.classList.remove('light');
+        document.documentElement.classList.add('dark');
+      }
+    }
   }
 
   ngAfterViewInit() {
-    setTimeout(() => this.checkSectionVisibility(), 300);
+    this.setupIntersectionObserver();
+  }
+
+  private setupIntersectionObserver() {
+    if (typeof IntersectionObserver !== 'undefined') {
+      const observerOptions = {
+        root: null,
+        rootMargin: '0px 0px -10% 0px',
+        threshold: 0.1
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const id = entry.target.id;
+            if (id === 'about') this.aboutVisible = true;
+            if (id === 'skills') this.skillsVisible = true;
+            if (id === 'services') this.servicesVisible = true;
+            if (id === 'projects') this.projectsVisible = true;
+            if (id === 'contact') this.contactVisible = true;
+          }
+        });
+      }, observerOptions);
+
+      ['about', 'skills', 'services', 'projects', 'contact'].forEach(id => {
+        const el = document.getElementById(id);
+        if (el) observer.observe(el);
+      });
+    }
+
+    // Immediate check for visible top sections
+    setTimeout(() => this.checkSectionVisibility(), 150);
   }
 
   private checkSectionVisibility() {
     const windowHeight = window.innerHeight;
-    const offset = windowHeight * 0.82;
+    const offset = windowHeight * 0.9;
 
     const sections = [
       { id: 'about', flag: 'aboutVisible' },

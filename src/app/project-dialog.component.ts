@@ -73,7 +73,7 @@ export interface Project {
         <div class="dialog-section" @fadeInSection>
           <h3 class="section-title">
             <mat-icon class="section-icon">description</mat-icon>
-            Présentation & Contexte
+            Présentation &amp; Contexte
           </h3>
           <p class="section-text">{{ data.fullDescription }}</p>
         </div>
@@ -92,7 +92,7 @@ export interface Project {
         <div class="dialog-section" *ngIf="data.features?.length" @featureStagger>
           <h3 class="section-title">
             <mat-icon class="section-icon">verified</mat-icon>
-            Fonctionnalités Clés & Valeur Métier
+            Fonctionnalités Clés &amp; Valeur Métier
           </h3>
           <ul class="feature-list">
             <li class="feature-item" *ngFor="let feat of data.features">
@@ -108,7 +108,7 @@ export interface Project {
         <div class="dialog-section" *ngIf="data.architecture" @fadeInSection>
           <h3 class="section-title">
             <mat-icon class="section-icon">layers</mat-icon>
-            Architecture & Stack Technique
+            Architecture &amp; Stack Technique
           </h3>
           <p class="section-text arch-text">{{ data.architecture }}</p>
           <div class="tech-tags-wrap">
@@ -122,18 +122,18 @@ export interface Project {
       <!-- Action Footer -->
       <div class="dialog-footer-actions">
         <ng-container *ngIf="data.repos?.length; else singleRepo">
-          <a *ngFor="let repo of data.repos" [href]="repo.url" target="_blank" class="btn-action-outline">
+          <a *ngFor="let repo of data.repos" [href]="repo.url" target="_blank" rel="noopener" class="btn-action-outline">
             <i [class]="repo.url.includes('gitlab.com') ? 'bx bxl-gitlab' : 'bx bxl-github'" style="font-size: 1.25rem;"></i>
             <span>{{ repo.label }}</span>
           </a>
         </ng-container>
         <ng-template #singleRepo>
-          <a *ngIf="data.githubUrl" [href]="data.githubUrl" target="_blank" class="btn-action-outline">
+          <a *ngIf="data.githubUrl" [href]="data.githubUrl" target="_blank" rel="noopener" class="btn-action-outline">
             <i [class]="data.githubUrl.includes('gitlab.com') ? 'bx bxl-gitlab' : 'bx bxl-github'" style="font-size: 1.25rem;"></i>
             <span>{{ data.githubUrl.includes('gitlab.com') ? 'Dépôt GitLab' : 'Dépôt GitHub' }}</span>
           </a>
         </ng-template>
-        <a *ngIf="data.liveUrl && data.liveUrl !== '#'" [href]="data.liveUrl" target="_blank" class="btn-action-gradient">
+        <a *ngIf="data.liveUrl && data.liveUrl !== '#'" [href]="data.liveUrl" target="_blank" rel="noopener" class="btn-action-gradient">
           <mat-icon style="font-size: 1.15rem; width: 1.15rem; height: 1.15rem;">open_in_new</mat-icon> Accéder à la Démo
         </a>
         <button class="btn-action-close" (click)="close()">
@@ -156,7 +156,8 @@ export interface Project {
       flex-direction: column;
       max-height: 88vh;
       width: 100%;
-      background: #141E34;
+      background: var(--bg-card-solid);
+      color: var(--text-primary);
       border-radius: 20px;
       overflow: hidden;
       box-sizing: border-box;
@@ -178,7 +179,7 @@ export interface Project {
       width: 36px;
       height: 36px;
       border-radius: 50%;
-      border: 1px solid rgba(255, 255, 255, 0.25);
+      border: 1px solid rgba(255, 255, 255, 0.3);
       background: rgba(0, 0, 0, 0.35);
       color: #FFFFFF;
       display: flex;
@@ -278,7 +279,7 @@ export interface Project {
     .section-title {
       font-size: 1rem;
       font-weight: 700;
-      color: #FFFFFF;
+      color: var(--text-primary);
       margin: 0;
       display: flex;
       align-items: center;
@@ -286,14 +287,14 @@ export interface Project {
     }
 
     .section-icon {
-      color: #818CF8;
+      color: var(--c-indigo);
       font-size: 1.25rem;
       width: 1.25rem;
       height: 1.25rem;
     }
 
     .section-text {
-      color: #CBD5E1;
+      color: var(--text-secondary);
       font-size: 0.92rem;
       line-height: 1.65;
       margin: 0;
@@ -310,8 +311,8 @@ export interface Project {
     .metric-box {
       flex: 1;
       min-width: 90px;
-      background: rgba(99, 102, 241, 0.08);
-      border: 1px solid rgba(99, 102, 241, 0.2);
+      background: var(--bg-subtle);
+      border: 1px solid var(--border-color);
       border-radius: 10px;
       padding: 0.5rem 0.75rem;
       display: flex;
@@ -319,14 +320,15 @@ export interface Project {
     }
     .metric-box-val {
       font-size: 0.88rem;
-      font-weight: 700;
-      color: #FFFFFF;
+      font-weight: 800;
+      color: var(--text-primary);
     }
     .metric-box-lbl {
       font-size: 0.65rem;
-      color: #94A3B8;
+      color: var(--text-tertiary);
       text-transform: uppercase;
       letter-spacing: 0.04em;
+      font-weight: 600;
     }
 
     .feature-list {
@@ -343,8 +345,8 @@ export interface Project {
       align-items: flex-start;
       gap: 0.65rem;
       font-size: 0.9rem;
-      color: #CBD5E1;
-      line-height: 1.5;
+      color: var(--text-secondary);
+      line-height: 1.55;
       word-break: break-word;
     }
 
@@ -366,10 +368,10 @@ export interface Project {
     .dialog-tag-badge {
       font-size: 0.78rem;
       font-weight: 600;
-      color: #A5B4FC;
-      background: rgba(99, 102, 241, 0.12);
-      border: 1px solid rgba(99, 102, 241, 0.25);
-      padding: 0.35rem 0.75rem;
+      color: var(--c-indigo-text);
+      background: var(--c-indigo-bg);
+      border: 1px solid var(--c-indigo-border);
+      padding: 0.32rem 0.75rem;
       border-radius: 8px;
     }
 
@@ -378,8 +380,8 @@ export interface Project {
       display: flex;
       align-items: center;
       gap: 0.75rem;
-      border-top: 1px solid rgba(255, 255, 255, 0.08);
-      background: #111A2E;
+      border-top: 1px solid var(--divider-color);
+      background: var(--bg-secondary);
       flex-shrink: 0;
       flex-wrap: wrap;
       box-sizing: border-box;
@@ -390,25 +392,22 @@ export interface Project {
       align-items: center;
       gap: 0.4rem;
       padding: 0.55rem 1.15rem;
-      border: 1px solid rgba(255, 255, 255, 0.18);
+      border: 1.5px solid var(--border-strong);
       border-radius: 10px;
-      color: #E2E8F0;
+      color: var(--text-primary);
       font-size: 0.88rem;
       font-weight: 600;
       text-decoration: none;
-      background: rgba(255, 255, 255, 0.04);
+      background: var(--bg-card);
       transition: all 0.2s ease;
     }
     .btn-action-outline:hover {
-      background: rgba(255, 255, 255, 0.1);
-      color: #FFFFFF;
+      border-color: var(--c-indigo);
+      color: var(--c-indigo);
       transform: translateY(-2px);
     }
     .btn-action-outline .bxl-gitlab {
       color: #FC6D26;
-    }
-    .btn-action-outline:hover .bxl-gitlab {
-      color: #FFA166;
     }
 
     .btn-action-gradient {
@@ -421,12 +420,12 @@ export interface Project {
       font-size: 0.88rem;
       font-weight: 600;
       text-decoration: none;
-      background: linear-gradient(135deg, #6366F1, #8B5CF6);
-      box-shadow: 0 4px 15px rgba(99, 102, 241, 0.35);
+      background: linear-gradient(135deg, #2563EB, #7C3AED);
+      box-shadow: 0 4px 15px rgba(37, 99, 235, 0.35);
       transition: all 0.2s ease;
     }
     .btn-action-gradient:hover {
-      box-shadow: 0 6px 20px rgba(99, 102, 241, 0.5);
+      box-shadow: 0 6px 20px rgba(37, 99, 235, 0.5);
       transform: translateY(-2px);
     }
 
@@ -434,20 +433,20 @@ export interface Project {
       margin-left: auto;
       padding: 0.55rem 1.25rem;
       border-radius: 10px;
-      border: 1px solid rgba(255, 255, 255, 0.12);
-      background: rgba(255, 255, 255, 0.08);
-      color: #FFFFFF;
+      border: 1.5px solid var(--border-strong);
+      background: var(--bg-card);
+      color: var(--text-primary);
       font-size: 0.88rem;
       font-weight: 600;
       cursor: pointer;
       transition: all 0.2s ease;
     }
     .btn-action-close:hover {
-      background: rgba(255, 255, 255, 0.16);
+      background: var(--bg-tertiary);
     }
 
     mat-divider {
-      border-top-color: rgba(255, 255, 255, 0.08) !important;
+      border-top-color: var(--divider-color) !important;
     }
 
     @media (max-width: 640px) {
