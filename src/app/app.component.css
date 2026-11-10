@@ -169,6 +169,53 @@
   height: 1.15rem !important;
 }
 
+/* LANGUAGE SWITCHER PILL TOGGLE (FR / EN) */
+.lang-pill-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.35rem 0.75rem;
+  height: 38px;
+  border-radius: 9999px;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-strong);
+  color: var(--text-muted);
+  font-family: var(--font-code);
+  font-size: 0.8rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  user-select: none;
+}
+
+.lang-pill-toggle:hover {
+  border-color: var(--c-cyan);
+  background: var(--c-cyan-bg);
+  box-shadow: 0 0 12px rgba(0, 210, 255, 0.2);
+}
+
+.lang-pill-toggle .lang-code {
+  transition: color 0.2s ease, text-shadow 0.2s ease, font-weight 0.2s ease;
+  color: var(--text-muted);
+}
+
+.lang-pill-toggle .lang-code.active {
+  color: var(--c-cyan);
+  font-weight: 800;
+  text-shadow: 0 0 10px rgba(0, 210, 255, 0.4);
+}
+
+:host-context(html.light) .lang-pill-toggle .lang-code.active {
+  color: #0284C7;
+  text-shadow: none;
+}
+
+.lang-pill-toggle .lang-sep {
+  opacity: 0.4;
+  font-size: 0.75rem;
+  color: var(--text-tertiary);
+}
+
 /* THEME TOGGLE BUTTON (Mode Sombre / Mode Clair) */
 .theme-toggle-btn {
   width: 38px;

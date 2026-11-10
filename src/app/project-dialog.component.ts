@@ -5,25 +5,21 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { trigger, transition, style, animate, stagger, query } from '@angular/animations';
+import { ProjectTranslation } from './translations';
 
-export interface Project {
-  id: string;
-  title: string;
-  subtitle: string;
-  category: 'web' | 'mobile' | 'backend' | 'fullstack';
-  categoryLabel: string;
-  shortDescription: string;
-  fullDescription: string;
-  icon: string;
-  colorGradient: string;
-  accentColor: string;
-  tags: string[];
-  features: string[];
-  architecture?: string;
-  githubUrl?: string;
-  liveUrl?: string;
-  repos?: { label: string; url: string }[];
-  metrics?: { label: string; value: string }[];
+export type Project = ProjectTranslation;
+
+export interface ProjectDialogData {
+  project: ProjectTranslation;
+  labels?: {
+    overviewTitle: string;
+    featuresTitle: string;
+    archTitle: string;
+    accessDemo: string;
+    closeBtn: string;
+    gitlabRepo: string;
+    githubRepo: string;
+  };
 }
 
 @Component({
@@ -51,18 +47,18 @@ export interface Project {
   template: `
     <div class="dialog-wrapper">
       <!-- Banner Header -->
-      <div class="dialog-banner" [style.background]="data.colorGradient">
-        <button class="dialog-close-btn" (click)="close()" aria-label="Fermer">
+      <div class="dialog-banner" [style.background]="project.colorGradient">
+        <button class="dialog-close-btn" (click)="close()" [attr.aria-label]="labels.closeBtn">
           <mat-icon>close</mat-icon>
         </button>
         <div class="banner-content">
           <div class="banner-icon">
-            <i class='bx' [ngClass]="data.icon"></i>
+            <i class='bx' [ngClass]="project.icon"></i>
           </div>
           <div class="banner-text">
-            <span class="banner-category">{{ data.categoryLabel }}</span>
-            <h2 class="banner-title">{{ data.title }}</h2>
-            <p class="banner-subtitle">{{ data.subtitle }}</p>
+            <span class="banner-category">{{ project.categoryLabel }}</span>
+            <h2 class="banner-title">{{ project.title }}</h2>
+            <p class="banner-subtitle">{{ project.subtitle }}</p>
           </div>
         </div>
       </div>
@@ -73,14 +69,14 @@ export interface Project {
         <div class="dialog-section" @fadeInSection>
           <h3 class="section-title">
             <mat-icon class="section-icon">description</mat-icon>
-            Présentation &amp; Contexte
+            {{ labels.overviewTitle }}
           </h3>
-          <p class="section-text">{{ data.fullDescription }}</p>
+          <p class="section-text">{{ project.fullDescription }}</p>
         </div>
 
         <!-- Metrics Chips -->
-        <div class="metrics-row" *ngIf="data.metrics?.length">
-          <div class="metric-box" *ngFor="let m of data.metrics">
+        <div class="metrics-row" *ngIf="project.metrics?.length">
+          <div class="metric-box" *ngFor="let m of project.metrics">
             <span class="metric-box-val">{{ m.value }}</span>
             <span class="metric-box-lbl">{{ m.label }}</span>
           </div>
@@ -89,14 +85,14 @@ export interface Project {
         <mat-divider></mat-divider>
 
         <!-- Key Features -->
-        <div class="dialog-section" *ngIf="data.features?.length" @featureStagger>
+        <div class="dialog-section" *ngIf="project.features?.length" @featureStagger>
           <h3 class="section-title">
             <mat-icon class="section-icon">verified</mat-icon>
-            Fonctionnalités Clés &amp; Valeur Métier
+            {{ labels.featuresTitle }}
           </h3>
           <ul class="feature-list">
-            <li class="feature-item" *ngFor="let feat of data.features">
-              <mat-icon class="feature-check" [style.color]="data.accentColor">check_circle</mat-icon>
+            <li class="feature-item" *ngFor="let feat of project.features">
+              <mat-icon class="feature-check" [style.color]="project.accentColor">check_circle</mat-icon>
               <span>{{ feat }}</span>
             </li>
           </ul>
@@ -105,14 +101,14 @@ export interface Project {
         <mat-divider></mat-divider>
 
         <!-- Architecture & Tech Stack -->
-        <div class="dialog-section" *ngIf="data.architecture" @fadeInSection>
+        <div class="dialog-section" *ngIf="project.architecture" @fadeInSection>
           <h3 class="section-title">
             <mat-icon class="section-icon">layers</mat-icon>
-            Architecture &amp; Stack Technique
+            {{ labels.archTitle }}
           </h3>
-          <p class="section-text arch-text">{{ data.architecture }}</p>
+          <p class="section-text arch-text">{{ project.architecture }}</p>
           <div class="tech-tags-wrap">
-            <span class="dialog-tag-badge" *ngFor="let tag of data.tags">
+            <span class="dialog-tag-badge" *ngFor="let tag of project.tags">
               {{ tag }}
             </span>
           </div>
@@ -121,23 +117,23 @@ export interface Project {
 
       <!-- Action Footer -->
       <div class="dialog-footer-actions">
-        <ng-container *ngIf="data.repos?.length; else singleRepo">
-          <a *ngFor="let repo of data.repos" [href]="repo.url" target="_blank" rel="noopener" class="btn-action-outline">
+        <ng-container *ngIf="project.repos?.length; else singleRepo">
+          <a *ngFor="let repo of project.repos" [href]="repo.url" target="_blank" rel="noopener" class="btn-action-outline">
             <i [class]="repo.url.includes('gitlab.com') ? 'bx bxl-gitlab' : 'bx bxl-github'" style="font-size: 1.25rem;"></i>
             <span>{{ repo.label }}</span>
           </a>
         </ng-container>
         <ng-template #singleRepo>
-          <a *ngIf="data.githubUrl" [href]="data.githubUrl" target="_blank" rel="noopener" class="btn-action-outline">
-            <i [class]="data.githubUrl.includes('gitlab.com') ? 'bx bxl-gitlab' : 'bx bxl-github'" style="font-size: 1.25rem;"></i>
-            <span>{{ data.githubUrl.includes('gitlab.com') ? 'Dépôt GitLab' : 'Dépôt GitHub' }}</span>
+          <a *ngIf="project.githubUrl" [href]="project.githubUrl" target="_blank" rel="noopener" class="btn-action-outline">
+            <i [class]="project.githubUrl.includes('gitlab.com') ? 'bx bxl-gitlab' : 'bx bxl-github'" style="font-size: 1.25rem;"></i>
+            <span>{{ project.githubUrl.includes('gitlab.com') ? labels.gitlabRepo : labels.githubRepo }}</span>
           </a>
         </ng-template>
-        <a *ngIf="data.liveUrl && data.liveUrl !== '#'" [href]="data.liveUrl" target="_blank" rel="noopener" class="btn-action-gradient">
-          <mat-icon style="font-size: 1.15rem; width: 1.15rem; height: 1.15rem;">open_in_new</mat-icon> Accéder à la Démo
+        <a *ngIf="project.liveUrl && project.liveUrl !== '#'" [href]="project.liveUrl" target="_blank" rel="noopener" class="btn-action-gradient">
+          <mat-icon style="font-size: 1.15rem; width: 1.15rem; height: 1.15rem;">open_in_new</mat-icon> {{ labels.accessDemo }}
         </a>
         <button class="btn-action-close" (click)="close()">
-          Fermer
+          {{ labels.closeBtn }}
         </button>
       </div>
     </div>
@@ -485,8 +481,24 @@ export interface Project {
 export class ProjectDialogComponent {
   constructor(
     public dialogRef: MatDialogRef<ProjectDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: Project
+    @Inject(MAT_DIALOG_DATA) public data: any
   ) {}
+
+  get project(): ProjectTranslation {
+    return this.data?.project || this.data;
+  }
+
+  get labels() {
+    return this.data?.labels || {
+      overviewTitle: 'Présentation & Contexte',
+      featuresTitle: 'Fonctionnalités Clés & Valeur Métier',
+      archTitle: 'Architecture & Stack Technique',
+      accessDemo: 'Accéder à la Démo',
+      closeBtn: 'Fermer',
+      gitlabRepo: 'Dépôt GitLab',
+      githubRepo: 'Dépôt GitHub'
+    };
+  }
 
   close() {
     this.dialogRef.close();

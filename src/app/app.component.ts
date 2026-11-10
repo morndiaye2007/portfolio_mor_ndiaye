@@ -1,4 +1,4 @@
-import { Component, OnInit, HostListener, AfterViewInit, ElementRef, QueryList, ViewChildren } from '@angular/core';
+import { Component, OnInit, HostListener, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterOutlet } from '@angular/router';
@@ -15,8 +15,11 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatRippleModule } from '@angular/material/core';
-import { trigger, transition, style, animate, stagger, query, state, group, animateChild } from '@angular/animations';
-import { Project, ProjectDialogComponent } from './project-dialog.component';
+import { trigger, transition, style, animate, stagger, query } from '@angular/animations';
+import { ProjectDialogComponent } from './project-dialog.component';
+import { Language, Translations, TRANSLATIONS, ProjectTranslation } from './translations';
+
+export type Project = ProjectTranslation;
 
 @Component({
   selector: 'app-root',
@@ -144,6 +147,28 @@ export class AppComponent implements OnInit, AfterViewInit {
   isDarkMode = true;
   activeFilter: string = 'all';
 
+  // Internationalization (French & English)
+  currentLang: Language = 'fr';
+
+  get t(): Translations {
+    return TRANSLATIONS[this.currentLang];
+  }
+
+  setLanguage(lang: Language) {
+    this.currentLang = lang;
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('language', lang);
+      document.documentElement.lang = lang;
+      document.title = lang === 'fr'
+        ? 'Mor Ndiaye - Développeur Full Stack & Mobile | Portfolio'
+        : 'Mor Ndiaye - Full Stack & Mobile Engineer | Portfolio';
+    }
+  }
+
+  toggleLanguage() {
+    this.setLanguage(this.currentLang === 'fr' ? 'en' : 'fr');
+  }
+
   toggleTheme() {
     this.isDarkMode = !this.isDarkMode;
     if (this.isDarkMode) {
@@ -160,37 +185,25 @@ export class AppComponent implements OnInit, AfterViewInit {
   // Interactive About section tab
   selectedAboutTab: 'backend' | 'frontend' = 'backend';
 
-  aboutContent = {
-    backend: {
-      badge: 'Expertise Backend & Microservices',
-      title: 'Architectures Microservices & Systèmes Robustes',
-      paragraphs: [
-        `Ingénieur backend spécialisé en <strong>Java & Spring Boot</strong>, je conçois des architectures microservices modulaires et sécurisées (<strong>OAuth2, JWT</strong>), avec streaming d'événements <strong>Apache Kafka</strong> et bases de données relationnelles (<strong>PostgreSQL, MySQL</strong>).`,
-        `J'ai notamment développé le socle backend du <strong>Portail Don de Sang</strong> (gestion de flux critiques en temps réel) et l'ERP de gestion pharmaceutique <strong>PharmaGest</strong> avec des APIs RESTful hautement optimisées.`
-      ],
-      stats: [
-        { num: '2+', label: "Années d'Expérience" },
-        { num: '5+', label: 'APIs & Microservices' },
-        { num: '100%', label: 'Disponibilité & Sécurité' }
-      ]
-    },
-    frontend: {
-      badge: 'Expertise Frontend & Mobile',
-      title: 'Interfaces Web Réactives & Applications Multiplateformes',
-      paragraphs: [
-        `Développeur d'expériences numériques sous <strong>Angular 17+</strong> (Angular Material, animations soignées) et d'applications mobiles cross-platform réactives et fluides avec <strong>Flutter</strong> (iOS & Android).`,
-        `J'ai réalisé l'application mobile <strong>Smart Poulailler</strong> (monitoring avicole complet), la marketplace agricole <strong>AgriConnect</strong> et la solution mobile de prévisions en temps réel <strong>MétéoLive</strong>.`
-      ],
-      stats: [
-        { num: 'iOS & Android', label: 'Support Multiplateforme' },
-        { num: '60 FPS', label: 'Fluidité & Performance' },
-        { num: '100%', label: 'Responsive Design' }
-      ]
-    }
-  };
-
   selectAboutTab(tab: 'backend' | 'frontend') {
     this.selectedAboutTab = tab;
+  }
+
+  get aboutContent() {
+    return {
+      backend: {
+        badge: this.t.about.backendFocusBadge,
+        title: this.t.about.backendFocusTitle,
+        paragraphs: this.t.about.backendParagraphs,
+        stats: this.t.about.backendStats
+      },
+      frontend: {
+        badge: this.t.about.frontendFocusBadge,
+        title: this.t.about.frontendFocusTitle,
+        paragraphs: this.t.about.frontendParagraphs,
+        stats: this.t.about.frontendStats
+      }
+    };
   }
 
   // Visibility flags for scroll-triggered animations
@@ -201,171 +214,28 @@ export class AppComponent implements OnInit, AfterViewInit {
   projectsVisible = false;
   contactVisible = false;
 
-  projects: Project[] = [
-    {
-      id: 'don-sang',
-      title: 'Don de Sang',
-      subtitle: 'Écosystème Complet : Portail Hôpitaux, Plateforme Citoyenne & App Mobile',
-      category: 'fullstack',
-      categoryLabel: 'Écosystème Web & Mobile',
-      shortDescription: 'Écosystème complet de gestion des dons de sang : portail administratif temps réel pour hôpitaux, plateforme citoyenne web et application mobile Flutter avec alertes d\'urgence géolocalisées.',
-      fullDescription: 'Une solution complète conçue pour fluidifier toute la chaîne du don de sang. Le portail d\'administration offre aux centres de transfusion et hôpitaux un tableau de bord temps réel pour anticiper les pénuries et sécuriser la traçabilité des poches. La plateforme citoyenne web permet aux volontaires de tester leur éligibilité et de prendre rendez-vous. L\'application mobile Flutter géolocalise les centres de collecte et envoie des notifications push d\'urgence ciblées par groupe sanguin.',
-      icon: 'bx-donate-blood',
-      colorGradient: 'linear-gradient(135deg, #8B5CF6 0%, #6D28D9 100%)',
-      accentColor: '#8B5CF6',
-      tags: ['Angular 17', 'Spring Boot', 'PostgreSQL', 'JWT Security', 'Flutter', 'Dart', 'Google Maps API', 'Push Notifications', 'REST API'],
-      features: [
-        'Tableau de bord temps réel des stocks par groupe sanguin (A, B, AB, O +/-) pour hôpitaux et centres de collecte',
-        'Espace citoyen : prise de rendez-vous en ligne, test d\'éligibilité et localisation des collectes fixes et mobiles',
-        'Application mobile avec géolocalisation des centres et carnet de don digitalisé',
-        'Notifications push d\'urgence ciblées par groupe sanguin et rayon kilométrique',
-        'Système d\'alerte automatique en cas de seuil critique ou pénurie vitale',
-        'Gestion sécurisée des dossiers donneurs (OAuth2/JWT) et traçabilité des poches de la collecte à la transfusion'
-      ],
-      architecture: 'Écosystème composé de trois briques connectées à une API REST Spring Boot commune sécurisée par JWT : un portail d\'administration Angular 17 pour les hôpitaux, une plateforme web citoyenne, et une application mobile Flutter (architecture BLoC) pour les donneurs, le tout appuyé sur PostgreSQL.',
-      githubUrl: 'https://gitlab.com/ndiaye_tech/sene-sang-portail',
-      liveUrl: '#',
-      repos: [
-        { label: 'Portail Hôpitaux (GitLab)', url: 'https://gitlab.com/ndiaye_tech/sene-sang-portail' },
-        { label: 'Web Citoyen & Mobile (GitLab)', url: 'https://gitlab.com/ndiaye_tech/sene-sang' }
-      ],
-      metrics: [
-        { label: 'Gestion', value: 'Temps réel' },
-        { label: 'Sécurité', value: 'OAuth2 / JWT' },
-        { label: 'Plateformes', value: 'Web & Mobile' }
-      ]
-    },
-    {
-      id: 'agriconnect',
-      title: 'AgriConnect',
-      subtitle: 'Écosystème Numérique Agricole & Marketplace Intelligente',
-      category: 'fullstack',
-      categoryLabel: 'Full Stack & Web/Mobile',
-      shortDescription: 'Plateforme innovante reliant directement les agriculteurs aux acheteurs, avec suivi des récoltes, cours du marché et conseils agrométéorologiques.',
-      fullDescription: 'AgriConnect est une solution technologique à fort impact socio-économique conçue pour valoriser la production agricole locale. Elle offre aux producteurs un espace de vente directe sans intermédiaires abusifs, un suivi en temps réel du cours des denrées sur les marchés régionaux et des prévisions agro-climatiques pour optimiser les périodes de semis et de récolte.',
-      icon: 'bx-leaf',
-      colorGradient: 'linear-gradient(135deg, #A855F7 0%, #7E22CE 100%)',
-      accentColor: '#A855F7',
-      tags: ['Angular', 'Spring Boot', 'Flutter', 'MySQL', 'OpenWeather API', 'Chart.js'],
-      features: [
-        'Marketplace B2B/B2C pour la commercialisation directe des récoltes',
-        'Tableau de bord dynamique d\'analyse des cours et fluctuations des prix du marché',
-        'Module de conseils agronomiques personnalisés et calendrier cultural',
-        'Alertes météo ciblées pour protéger les cultures contre les intempéries',
-        'Espace logistique pour coordonner le transport et la livraison des commandes'
-      ],
-      architecture: 'Écosystème complet avec Backend Spring Boot, portail web Angular pour la gestion et app mobile Flutter pour les agriculteurs sur le terrain.',
-      githubUrl: 'https://gitlab.com/ndiaye_tech/agri_connect',
-      liveUrl: '#',
-      metrics: [
-        { label: 'Circuit Court', value: '100% Direct' },
-        { label: 'Données Marché', value: 'Quotidiennes' },
-        { label: 'Plateforme', value: 'GitLab' }
-      ]
-    },
-    {
-      id: 'gestion-pharmacie',
-      title: 'PharmaGest - Gestion de Pharmacie',
-      subtitle: 'ERP Complet d\'Officine, Stocks & Traçabilité des Médicaments',
-      category: 'web',
-      categoryLabel: 'Système ERP / Gestion',
-      shortDescription: 'Logiciel robuste de gestion officinale : contrôle des stocks avec alertes péremption, délivrance d\'ordonnances, caisse et suivi fournisseurs.',
-      fullDescription: 'PharmaGest est une solution de gestion pharmaceutique conçue pour fiabiliser et fluidifier le travail quotidien des pharmaciens. Le système assure un contrôle rigoureux des entrées/sorties de stocks, déclenche des alertes intelligentes sur les dates de péremption et ruptures imminentes, gère la facturation multi-paiements et édite des rapports statistiques complets de rentabilité.',
-      icon: 'bx-capsule',
-      colorGradient: 'linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%)',
-      accentColor: '#3B82F6',
-      tags: ['Spring Boot', 'Angular', 'PostgreSQL', 'JasperReports', 'Spring Security', 'REST API'],
-      features: [
-        'Gestion avancée des stocks avec suivi des lots, dosages et dates limites d\'utilisation',
-        'Système d\'alerte proactif : ruptures de stock et médicaments proches de la péremption',
-        'Point de vente (POS) rapide avec scanner code-barres et impression tickets de caisse',
-        'Gestion des ordonnances médicales et des tiers-payants / mutuelles',
-        'Génération automatisée des commandes fournisseurs et bons de livraison',
-        'Rapports financiers et d\'inventaire exportables en PDF (JasperReports) et Excel'
-      ],
-      architecture: 'Architecture sécurisée en couches (N-Tiers) propulsée par Spring Boot, PostgreSQL pour l\'intégrité transactionnelle (ACID) et Angular pour l\'IHM.',
-      githubUrl: 'https://github.com/morndiaye2007',
-      liveUrl: '#',
-      metrics: [
-        { label: 'Intégrité', value: '100% ACID' },
-        { label: 'Alertes', value: 'Automatisées' },
-        { label: 'Rapports', value: 'PDF / Excel' }
-      ]
-    },
-    {
-      id: 'smart-poulailler',
-      title: 'Smart Poulailler - App Mobile',
-      subtitle: 'Application Mobile de Suivi & Gestion d\'Élevage Avicole',
-      category: 'mobile',
-      categoryLabel: 'Application Mobile',
-      shortDescription: 'Application mobile intuitive pour la gestion et le pilotage d\'élevages avicoles : suivi des bandes, ponte, alimentation, dépenses et rentabilité.',
-      fullDescription: 'Smart Poulailler est une application mobile développée sous Flutter conçue pour digitaliser et simplifier le pilotage quotidien des élevages de volailles directement sur smartphone. Elle permet aux éleveurs de suivre avec précision chaque bande de volailles (poussins, poulets de chair, pondeuses), d\'enregistrer les consommations d\'aliments et soins, de surveiller les courbes de ponte et de mortalité, et de calculer automatiquement la rentabilité financière de chaque lot.',
-      icon: 'bx-mobile-alt',
-      colorGradient: 'linear-gradient(135deg, #00D2FF 0%, #0284C7 100%)',
-      accentColor: '#00D2FF',
-      tags: ['Flutter', 'Dart', 'Spring Boot', 'PostgreSQL', 'REST API', 'Charts / Graphiques'],
-      features: [
-        'Suivi mobile complet des bandes avicoles (âge, effectifs, taux de ponte, mortalité)',
-        'Gestion des stocks d\'aliments, consommations journalières et traitements vétérinaires',
-        'Graphiques d\'analyse de ponte et suivi des performances de production',
-        'Enregistrement direct des ventes d\'œufs et de poulets avec carnet clients',
-        'Calcul automatique instantané des marges et de la rentabilité nette par lot'
-      ],
-      architecture: 'Application mobile Flutter avec gestion d\'état performante, connectée à une API REST sécurisée Spring Boot et base de données PostgreSQL.',
-      githubUrl: 'https://github.com/morndiaye2007/Smart-Poulailler',
-      liveUrl: '#',
-      metrics: [
-        { label: 'Plateforme', value: 'Mobile Flutter' },
-        { label: 'Dépôt', value: 'GitHub Public' },
-        { label: 'Analytique', value: 'Graphiques' }
-      ]
-    },
-    {
-      id: 'meteo-mobile',
-      title: 'MétéoLive Mobile',
-      subtitle: 'Application Météo Interactive & Prévisions en Temps Réel',
-      category: 'mobile',
-      categoryLabel: 'Application Mobile',
-      shortDescription: 'Application mobile élégante proposant des prévisions météorologiques ultra précises, animations climatiques dynamiques et radar interactif.',
-      fullDescription: 'Application mobile météo alliant esthétique épurée et précision météorologique. Elle exploite l\'API OpenWeather pour restituer en temps réel les données climatiques (température ressentie, humidité, vent, indice UV, prévisions heure par heure et à 7 jours) accompagnées d\'animations visuelles immersives.',
-      icon: 'bx-cloud-lightning',
-      colorGradient: 'linear-gradient(135deg, #22D3EE 0%, #0E7490 100%)',
-      accentColor: '#22D3EE',
-      tags: ['Flutter', 'Dart', 'OpenWeather API', 'Lottie Animations', 'Geolocator'],
-      features: [
-        'Détection automatique de la position géographique avec mise à jour météo instantanée',
-        'Prévisions détaillées heure par heure et tendances climatiques sur 7 jours',
-        'Arrière-plans et micro-animations réactifs aux conditions météorologiques réelles',
-        'Recherche et mise en favoris de villes internationales',
-        'Mode hors-ligne avec cache local des dernières données relevées'
-      ],
-      architecture: 'Flutter avec gestion d\'état Provider, animations Lottie haute performance et gestion de cache persistant.',
-      githubUrl: 'https://github.com/morndiaye2007',
-      liveUrl: '#',
-      metrics: [
-        { label: 'Données', value: 'Temps réel' },
-        { label: 'Précision', value: 'Heure / Heure' },
-        { label: 'Animations', value: 'Fluides 60fps' }
-      ]
-    }
-  ];
+  get projects(): ProjectTranslation[] {
+    return this.t.projects.items;
+  }
 
   constructor(private dialog: MatDialog) {}
 
-  get filteredProjects(): Project[] {
-    if (this.activeFilter === 'all') return this.projects;
-    if (this.activeFilter === 'web') return this.projects.filter(p => p.category === 'web' || p.category === 'fullstack');
-    if (this.activeFilter === 'mobile') return this.projects.filter(p => p.category === 'mobile' || p.category === 'fullstack');
-    if (this.activeFilter === 'backend') return this.projects.filter(p => p.category === 'backend' || p.category === 'fullstack');
-    return this.projects.filter(p => p.category === this.activeFilter);
+  get filteredProjects(): ProjectTranslation[] {
+    const list = this.projects;
+    if (this.activeFilter === 'all') return list;
+    if (this.activeFilter === 'web') return list.filter(p => p.category === 'web' || p.category === 'fullstack');
+    if (this.activeFilter === 'mobile') return list.filter(p => p.category === 'mobile' || p.category === 'fullstack');
+    if (this.activeFilter === 'backend') return list.filter(p => p.category === 'backend' || p.category === 'fullstack');
+    return list.filter(p => p.category === this.activeFilter);
   }
 
   get projectCount() {
+    const list = this.projects;
     return {
-      all: this.projects.length,
-      web: this.projects.filter(p => p.category === 'web' || p.category === 'fullstack').length,
-      mobile: this.projects.filter(p => p.category === 'mobile' || p.category === 'fullstack').length,
-      backend: this.projects.filter(p => p.category === 'backend' || p.category === 'fullstack').length,
+      all: list.length,
+      web: list.filter(p => p.category === 'web' || p.category === 'fullstack').length,
+      mobile: list.filter(p => p.category === 'mobile' || p.category === 'fullstack').length,
+      backend: list.filter(p => p.category === 'backend' || p.category === 'fullstack').length,
     };
   }
 
@@ -405,7 +275,7 @@ export class AppComponent implements OnInit, AfterViewInit {
           name: this.contactData.name,
           email: this.contactData.email,
           message: this.contactData.message,
-          _subject: `Nouveau message Portfolio de ${this.contactData.name}`,
+          _subject: `Nouveau message Portfolio de ${this.contactData.name} [${this.currentLang.toUpperCase()}]`,
           _template: 'table',
           _captcha: 'false'
         })
@@ -431,9 +301,12 @@ export class AppComponent implements OnInit, AfterViewInit {
     }
   }
 
-  openProjectModal(project: Project) {
+  openProjectModal(project: ProjectTranslation) {
     this.dialog.open(ProjectDialogComponent, {
-      data: project,
+      data: {
+        project: project,
+        labels: this.t.dialog
+      },
       width: '680px',
       maxWidth: '92vw',
       maxHeight: '88vh',
@@ -465,6 +338,18 @@ export class AppComponent implements OnInit, AfterViewInit {
     this.contactVisible = false;
 
     if (typeof window !== 'undefined') {
+      // Language detection & restore
+      const savedLang = localStorage.getItem('language') as Language;
+      if (savedLang === 'en' || savedLang === 'fr') {
+        this.currentLang = savedLang;
+      } else if (typeof navigator !== 'undefined' && navigator.language?.toLowerCase().startsWith('en')) {
+        this.currentLang = 'en';
+      } else {
+        this.currentLang = 'fr';
+      }
+      document.documentElement.lang = this.currentLang;
+
+      // Theme detection & restore
       const savedTheme = localStorage.getItem('theme');
       if (savedTheme === 'light') {
         this.isDarkMode = false;
